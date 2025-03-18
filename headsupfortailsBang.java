@@ -1,0 +1,351 @@
+package petCategory;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+public class headsupfortailsBang {
+    public static void main(String[] args) throws Exception {
+        ChromeOptions options = new ChromeOptions();
+        WebDriver driver = new ChromeDriver(options);
+        driver.manage().window().maximize();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        List<String> inputPid = new ArrayList<>(), InputCity = new ArrayList<>(), InputName = new ArrayList<>(),
+                InputSize = new ArrayList<>(), NewProductCode = new ArrayList<>(), uRL = new ArrayList<>(),
+                UOM = new ArrayList<>(), Mulitiplier = new ArrayList<>(),
+                Pincode = new ArrayList<>(), NameForCheck = new ArrayList<>();
+
+        Workbook resultsWorkbook = new XSSFWorkbook();
+        Sheet resultsSheet = resultsWorkbook.createSheet("Results");
+        createHeaderRow(resultsSheet);
+
+        int rowIndex = 1;
+        String currentPin = null;
+
+        try (FileInputStream file = new FileInputStream(".\\input-data\\headsupforTail Input data.xlsx");
+             Workbook urlsWorkbook = new XSSFWorkbook(file)) {
+
+            Sheet urlsSheet = urlsWorkbook.getSheet("HeadsUp2");//bangalore
+            int rowCount = urlsSheet.getPhysicalNumberOfRows();
+
+            // Extract URLs from Excel
+            for (int i = 1; i < rowCount; i++) {
+                Row row = urlsSheet.getRow(i);
+                if (row.getCell(5) != null) {
+                    String url;
+                    if (row.getCell(5).getCellType() == CellType.STRING) {
+                        url = row.getCell(5).getStringCellValue();
+                    } else if (row.getCell(5).getCellType() == CellType.NUMERIC) {
+                        url = String.valueOf(row.getCell(5).getNumericCellValue());
+                    } else {
+                        url = "NA"; // Handle cases where the cell is neither numeric nor string
+                    }
+
+                    inputPid.add(row.getCell(0).getStringCellValue());
+                    InputCity.add(row.getCell(1).getStringCellValue());
+                    InputName.add(row.getCell(2).getStringCellValue());
+                    InputSize.add(row.getCell(3).getStringCellValue());
+                    NewProductCode.add(row.getCell(4).getStringCellValue());
+                    uRL.add(url);
+                    UOM.add(row.getCell(6).getStringCellValue());
+                    Mulitiplier.add(row.getCell(7).getStringCellValue());
+                    Pincode.add(row.getCell(9).getStringCellValue());
+                    NameForCheck.add(row.getCell(10).getStringCellValue());
+                }
+            }
+
+            int ProductCOUNT = 0;
+
+            // Main data extraction logic
+            for (int i = 0; i < uRL.size(); i++) {
+                String url = uRL.get(i);
+                String locationSet = Pincode.get(i); // Get the current pincode from the list
+                if (url.isEmpty() || url.equalsIgnoreCase("NA")) {
+                    writeResults(resultsSheet, rowIndex++, inputPid.get(i), InputCity.get(i), InputName.get(i),
+                            InputSize.get(i), "NA", url, "NA", "NA", "NA",
+                            "NA", Mulitiplier.get(i), "NA", "NA", "NA", "NA", "NA", "NA", NameForCheck.get(i));
+                    System.out.println("Skipped processing for URL: " + url);
+                    continue;
+                }
+
+                try {
+                    driver.get(url);
+                    Thread.sleep(2000);
+
+                    if (currentPin == null || !currentPin.equals(locationSet)) {
+                        Thread.sleep(2000);
+                        driver.findElement(By.xpath("//div[@class='dtl_imputs']//input")).click();
+                        Thread.sleep(2000);
+                        driver.findElement(By.xpath("//div[@class='dtl_imputs']//input")).click();
+                        Thread.sleep(2000);
+                        driver.findElement(By.xpath("//div[@class='dtl_imputs']//input")).sendKeys(locationSet);
+                        Thread.sleep(2000);
+                        driver.findElement(By.xpath("//button[.='Check']")).click();
+                        Thread.sleep(2000);
+
+                        currentPin = locationSet;
+
+                        driver.get(url);
+                    }
+                    Thread.sleep(3000);
+
+                    // Extract product ID
+                    String productId = extractProductId(url);
+                    System.out.println("Extracted Product ID: " + url);
+
+                    String newName = " ";
+                    try {
+                        newName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='product__title']//h1"))).getText();
+                        System.out.println(newName);
+                    } catch (Exception e) {
+                        newName = "NA";
+                    }
+
+                    // Extract MRP
+                    String mrpValue = extractMRP(driver);
+                    System.out.println(mrpValue);
+
+                    // Extract SP
+                    String spValue = extractSP(driver);
+                    System.out.println(spValue);
+                    
+                    if ("NA".equals(spValue) && !mrpValue.equals("NA")) {
+                        spValue = mrpValue; // Assign MRP to SP if SP is NA and MRP is valid
+                    }
+
+
+                    // Extract offer
+                    String offerValue = extractOffer(driver);
+                    System.out.println(offerValue);
+                    
+                    // Take screenshot using productId from inputPid list
+                    takeScreenshot(driver, inputPid.get(i));  // Pass the productId from inputPid list
+
+                    int result;
+                    try {
+                        String[] textsToCheck = {"Notify Me"};
+                        String pageSource = driver.getPageSource();
+                        boolean isTextPresent = false;
+
+                        for (String text : textsToCheck) {
+                            if (pageSource.contains(text)) {
+                                isTextPresent = true;
+                                break;
+                            }
+                        }
+
+                        result = isTextPresent ? 0 : 1;
+                        System.out.println(result);
+                    } catch (Exception e) {
+                        System.out.println("Error checking availability: " + e.getMessage());
+                        result = -1;
+                    }
+
+                    String availability = String.valueOf(result);
+
+                    ProductCOUNT++;
+
+                    // Write results to the results sheet
+                    writeResults(resultsSheet, rowIndex++, inputPid.get(i), InputCity.get(i), InputName.get(i),
+                            InputSize.get(i), productId, url, newName, mrpValue, spValue,
+                            extractWeight(UOM, i), String.valueOf(Mulitiplier.get(i)), availability, offerValue, "NA", "NA", "NA", "NA", NameForCheck.get(i));
+
+                    System.out.println("Data extracted for URL: " + url);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Failed to extract data for URL: " + url);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("An error occurred during the extraction process.");
+        } finally {
+            // Write results to Excel file
+            saveResultsToExcel(resultsWorkbook);
+
+            // Clean up driver resources
+            if (driver != null) {
+                System.out.println("Closing the driver.");
+                driver.quit();
+            }
+        }
+    }
+
+    private static void createHeaderRow(Sheet sheet) {
+        Row headerRow = sheet.createRow(0);
+        String[] headers = {"InputPid", "InputCity", "InputName", "InputSize", "NewProductCode", "URL", "Name", "MRP",
+                "SP", "UOM", "Multiplier", "Availability", "Offer", "Commands", "Remarks", "Correctness",
+                "Percentage", "Name", "NameForCheck"};
+        for (int i = 0; i < headers.length; i++) {
+            headerRow.createCell(i).setCellValue(headers[i]);
+        }
+    }
+
+    private static void writeResults(Sheet sheet, int rowIndex, String id, String city, String name, String size,
+                                      String productId, String url, String newName, String mrpValue,
+                                      String spValue, String weight, String mulitiplier, String availability, String offerValue,
+                                      String command, String remark, String correctness, String percentage,
+                                      String nameCheck) {
+        Row resultRow = sheet.createRow(rowIndex);
+        resultRow.createCell(0).setCellValue(id);
+        resultRow.createCell(1).setCellValue(city);
+        resultRow.createCell(2).setCellValue(name);
+        resultRow.createCell(3).setCellValue(size);
+        resultRow.createCell(4).setCellValue(productId);
+        resultRow.createCell(5).setCellValue(url);
+        resultRow.createCell(6).setCellValue(newName);
+        resultRow.createCell(7).setCellValue(mrpValue);
+        resultRow.createCell(8).setCellValue(spValue);
+        resultRow.createCell(9).setCellValue(weight);
+        resultRow.createCell(10).setCellValue(mulitiplier);
+        resultRow.createCell(11).setCellValue(availability);
+        resultRow.createCell(12).setCellValue(offerValue);
+        resultRow.createCell(13).setCellValue(command);
+        resultRow.createCell(14).setCellValue(remark);
+        resultRow.createCell(15).setCellValue(correctness);
+        resultRow.createCell(16).setCellValue(percentage);
+        resultRow.createCell(17).setCellValue(nameCheck);
+    }
+
+    private static void saveResultsToExcel(Workbook resultsWorkbook) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+            String timestamp = dateFormat.format(new Date());
+            String outputFilePath = ".\\Output\\HeadUpTail_OutputData_Bang" + timestamp + ".xlsx";
+
+            // Write results to Excel file
+            try (FileOutputStream outFile = new FileOutputStream(outputFilePath)) {
+                resultsWorkbook.write(outFile);
+            }
+
+            System.out.println("Output file saved: " + outputFilePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Failed to save the output file.");
+        }
+    }
+
+    private static String extractMRP(WebDriver driver) {
+        try {
+            // Try to extract MRP from the price__sale section first
+            WebElement element = null;
+
+            try {
+                // Look for the MRP in the price__sale section using the updated XPath
+                element = driver.findElement(By.xpath("//div[@class='price__sale']//span//s[@class='price-item price-item--regular']"));
+            } catch (NoSuchElementException e) {
+                // If the element is not found in this section, set it to null
+                element = null;
+            }
+
+            // If an element was found in the price__sale section, check if it's a valid value
+            if (element != null && !element.getText().isEmpty()) {
+                String text = element.getText();
+                return isValidValue(text) ? text.replace("₹", "").trim() : "NA";
+            }
+
+            // If the first XPath fails or has no valid MRP, now check the price__regular section
+            try {
+                // Look for the MRP in the price__regular section
+                element = driver.findElement(By.xpath("//div[@class='price__regular']//span[@class='price-item price-item--regular']"));
+            } catch (NoSuchElementException e) {
+                // If the element is not found in this section either, return "NA"
+                element = null;
+            }
+
+            // If the element is found in the price__regular section, return the MRP
+            if (element != null && !element.getText().isEmpty()) {
+                String text = element.getText();
+                return isValidValue(text) ? text.replace("₹", "").trim() : "NA";
+            }
+
+            // If neither section has a valid MRP, return "NA"
+            return "NA";
+
+        } catch (Exception e) {
+            // Handle any other exceptions by returning "NA"
+            return "NA";
+        }
+    }
+
+
+
+    private static String extractSP(WebDriver driver) {
+        try {
+            List<WebElement> elements = driver.findElements(By.xpath("//span[@class='price-item price-item--sale price-item--last']"));
+
+            if (elements.isEmpty()) {
+                elements = driver.findElements(By.xpath("//span[@class='price-item price-item--discounted']"));
+            }
+
+            if (!elements.isEmpty()) {
+                String text = elements.get(0).getText();
+                return isValidValue(text) ? text.replace("₹", "").trim() : "NA";
+            } else {
+                return "NA";
+            }
+        } catch (Exception e) {
+            return "NA";
+        }
+    }
+
+    private static String extractOffer(WebDriver driver) {
+        try {
+            WebElement offerElement = driver.findElement(By.xpath("//span[@class='percent_discount']"));
+            return offerElement.getText();
+        } catch (Exception e) {
+            return "NA";  // If offer not found
+        }
+    }
+
+    private static String extractProductId(String url) {
+        // Extract the product ID from the URL if applicable
+        // Placeholder for extraction logic based on URL pattern
+        return url;  
+    }
+
+    private static boolean isValidValue(String value) {
+        return value != null && !value.isEmpty() && !value.equals("NA");
+    }
+
+    private static String extractWeight(List<String> UOM, int i) {
+        // Return the UOM directly from the input data list based on the current index `i`
+        return UOM.get(i);  // Return the UOM for the current product
+    }
+
+    private static void takeScreenshot(WebDriver driver, String productId) {
+        try {
+            TakesScreenshot ts = (TakesScreenshot) driver;
+            File sourceFile = ts.getScreenshotAs(OutputType.FILE);
+            String timestamp = new SimpleDateFormat("dd-MM-yyyy_HH_mm_ss").format(new Date());
+            String screenshotPath = ".\\Screenshot\\" + "HeadsUpForTails_" + productId + "_" + timestamp + ".png";
+            File destinationFile = new File(screenshotPath);
+            FileUtils.copyFile(sourceFile, destinationFile);
+            System.out.println("Screenshot saved for Product ID: " + productId);
+        } catch (Exception e) {
+            System.out.println("Failed to capture screenshot: " + e.getMessage());
+        }
+    }
+}
