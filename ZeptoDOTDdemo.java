@@ -1,4 +1,4 @@
-package Dailyrun;
+package Shopping;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -360,9 +360,10 @@ public class ZeptoDOTDdemo {
                    Thread.sleep(2000);
                    // offer
                    try {
-                       WebElement offer = driver.findElement(By.xpath("//div[@class='flex items-center']//div"));
-                       offerValue = offer.getText();
-                       
+                       WebElement offer = driver.findElement(By.xpath(".//div[@class='flex items-center']//div"));
+                       String NewOffer = offer.getText();
+                       offerValue = NewOffer;
+                      // offerValue = NewOffer.replace("-","").replace("%","% Off");
                       /* Pattern pattern = Pattern.compile("\\((.*?)\\)");
                        Matcher matcher = pattern.matcher(offer1);
                        
@@ -377,7 +378,8 @@ public class ZeptoDOTDdemo {
                     	  try {
                    	   WebElement offer = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[1]/span[2]"));
                    	   String NewOffer = offer.getText();
-                       offerValue = NewOffer.replace("-","").replace("%","% Off");
+                      // offerValue = NewOffer.replace("-","").replace("%","% Off");
+                   	   offerValue = NewOffer;
                           System.out.println(offerValue);
                     	  }
                     	  catch(Exception ex){
@@ -391,7 +393,7 @@ public class ZeptoDOTDdemo {
 					
 					int result = 1;
 					try {
-					String xpathForZepto = "//*[@id=\"__next\"]/div/div/div/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div";
+					String xpathForZepto = "//div[@class='sm:mx-auto sm:max-w-7xl']//div[@class='my-2 flex items-start']//div[@class='tag_tag__Y2gMh undefined tag_flat__fkjC8 !text-3xs']";
 
 					
 					boolean isElementPresent = !driver.findElements(By.xpath(xpathForZepto)).isEmpty();

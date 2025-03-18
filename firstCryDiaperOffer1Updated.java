@@ -1,4 +1,4 @@
-package Dailyrun;
+package Shopping;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -50,7 +50,7 @@ public class firstCryDiaperOffer1Updated {
             String filePath = ".\\input-data\\firstcryDiaDel.xlsx";
             FileInputStream file = new FileInputStream(filePath);
             Workbook urlsWorkbook = new XSSFWorkbook(file);
-            Sheet urlsSheet = urlsWorkbook.getSheet("FirstCry1");
+            Sheet urlsSheet = urlsWorkbook.getSheet("Sheet1");
             int rowCount = urlsSheet.getPhysicalNumberOfRows();
 
 	            List<String> inputPid = new ArrayList<>(),InputCity = new ArrayList<>(),InputName = new ArrayList<>(),InputSize = new ArrayList<>(),NewProductCode = new ArrayList<>(),
@@ -199,7 +199,7 @@ public class firstCryDiaperOffer1Updated {
                       WebElement regmail=driver.findElement(By.xpath("//*[@id=\"lemail\"]"));
                       regmail.click();
                       Thread.sleep(5000);
-                      regmail.sendKeys("Blinkit@mnw.co.in");//blktpoc2000@gmail.com
+                      regmail.sendKeys("blinkitproofofconcept@gmail.com");//blktpoc2000@gmail.com
                      //  blinkitproofofconcept@gmail.com 
                       
                       WebElement conmail= driver.findElement(By.xpath("//*[@id=\"login\"]/div/div[3]/span"));
@@ -209,7 +209,7 @@ public class firstCryDiaperOffer1Updated {
                       }   
                      
                 	  driver.get(url);
-                	 // driver.manage().window().maximize();
+                	  //driver.manage().window().maximize();
                 	  
                 	  String oldFrame = "//section[@class='pinfosection']";
                 	  WebElement oldFrameCheck = null;
@@ -222,12 +222,7 @@ public class firstCryDiaperOffer1Updated {
                 	  
                 	  if(oldFrameCheck != null && oldFrameCheck.isDisplayed()) {
                 	  
-                		  JavascriptExecutor js = (JavascriptExecutor) driver;
-
-                	        // Scroll down by 1000 pixels
-                	        js.executeScript("window.scrollBy(0, 1000)");
-
-                	  String addToCartButtonXPath1 = "/html/body/app-productdetail-rvp/span/section[1]/section/section[1]/div[4]/div/div[2]/span";
+                	  String addToCartButtonXPath1 = "/html/body/app-productdetail-rvp/span/section[1]/section/section[1]/div[3]/div/div[2]/span";
                 	 // String addToCartButtonXPath2 = "/html/body/div[5]/div/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div/span[1]/span";
                 	  WebElement addToCartButton = null;
 
@@ -274,7 +269,6 @@ public class firstCryDiaperOffer1Updated {
                       int Availability0 = 1;
                       NewAvailability1  = Integer.toString(Availability0);
                       
-                      //updateMulitipler = mulitiplier;
                       
                       try {
                       WebElement mrp = driver.findElement(By.xpath("//span[@class='newmrp ']//del"));
@@ -553,7 +547,7 @@ public class firstCryDiaperOffer1Updated {
                 	          
                 	  }
                 	  else {
-                		  //new lay out add to cart button is not present .....notify button present
+                		  
                 		  System.out.println("Add to Cart button is NOT present on the page.");
                 		  
                 		  Thread.sleep(2000);
@@ -573,44 +567,7 @@ public class firstCryDiaperOffer1Updated {
                                   System.out.println(newName);
                               	
                               }
-                		  boolean isTextPresent = false;
-                		  try {
-                              // Define the texts to check for
-                              String[] textsToCheck = {
-                                  "NOTIFY ME"  
-                              };
-
-                              // Get the page source
-                              String pageSource = driver.getPageSource();
                               
-                              // Check for the presence of any of the texts
-                              for (String text : textsToCheck) {
-                                  if (pageSource.contains(text)) {
-                                      isTextPresent = true;
-                                      break; 
-                                  }
-                              }
-
-                          } catch (Exception e) {
-                              System.out.println(e.getMessage());
-                            
-                          }    
-                		  
-                		  if(isTextPresent == true) {
-                			  
-                			  WebElement sp = driver.findElement(By.xpath("//span[@class='th-discounted-price ']//span"));
-                              spValue = sp.getText();
-                              
-                             
-                              double amount1 = Double.parseDouble(spValue) / 100.0;	
-                              String formattedAmount1 = String.format("%.2f", amount1);
-                  	       // System.out.println("Final value for coupon code : " + spValue);
-                              System.out.println(formattedAmount1);
-                              
-                               finalSp = formattedAmount1;
-                               
-                               System.out.println("===Notify me sp ===" + finalSp);
-                               
                               try {
                               WebElement mrp = driver.findElement(By.xpath("//span[@class='newmrp ']//del"));
                               mrpValue = mrp.getText();
@@ -619,43 +576,19 @@ public class firstCryDiaperOffer1Updated {
                               }
                               
                               catch(org.openqa.selenium.NoSuchElementException e){
-                            	  mrpValue = finalSp;
+                              	
+                                  WebElement mrp = driver.findElement(By.xpath("//*[@id=\"prodImgInfo\"]/section[2]/section[1]/p[1]/span[5]/span[1]/del"));
+                                  mrpValue = mrp.getText();                            
+                                  System.out.println(mrpValue);
                               	
                               }
                           Thread.sleep(500);
-                        
-                		  }
-                		  else {
-                			    try {
-                                    WebElement mrp = driver.findElement(By.xpath("//span[@class='newmrp ']//del"));
-                                    mrpValue = mrp.getText();
-                                    System.out.println(mrpValue);
-                                    
-                                    }
-                                    
-                                    catch(org.openqa.selenium.NoSuchElementException e){
-                                    	
-                                        WebElement mrp = driver.findElement(By.xpath("//*[@id=\"prodImgInfo\"]/section[2]/section[1]/p[1]/span[5]/span[1]/del"));
-                                        mrpValue = mrp.getText();                            
-                                        System.out.println(mrpValue);
-                                    	
-                                    }
-                                Thread.sleep(500);
-                                
-                                WebElement sp = driver.findElement(By.xpath("//span[@class='th-discounted-price ']//span"));
-                               spValue = sp.getText();
-                               
-                              
-                               double amount1 = Double.parseDouble(spValue) / 100.0;	
-                               String formattedAmount1 = String.format("%.2f", amount1);
-                   	        System.out.println("Final value for coupon code : " + formattedAmount1);
-                               //System.out.println(formattedAmount1);
-                               
-                                finalSp = formattedAmount1;
-                                
-                                System.out.println("+++++++++++" + finalSp);
-                		  }
                           
+                          WebElement sp = driver.findElement(By.xpath("//span[@class='th-discounted-price ']//span"));
+                         spValue = sp.getText();
+                         System.out.println("+++++++++++" + spValue);
+                          finalSp = spValue;
+                         
                           Availability1 = 0;
                           NewAvailability1  = Integer.toString(Availability1);
                           
@@ -667,7 +600,6 @@ public class firstCryDiaperOffer1Updated {
                 }
                 	  else{
                           try {
-                        	  //old layout scraping part
                             	
                               WebElement nameElement = driver.findElement(By.id("prod_name"));
                               newName = nameElement.getText();
@@ -838,7 +770,7 @@ public class firstCryDiaperOffer1Updated {
             	// for store the multiple we can use the time to store the multiple files
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
                 String timestamp = dateFormat.format(new Date());
-                String outputFilePath = ".\\Output\\Firstcry_Diapers_OutputData_FIRSTHalf" + timestamp + ".xlsx";
+                String outputFilePath = ".\\Output\\Firstcry_Diapers_OutputData_SecondHalf" + timestamp + ".xlsx";
                 
                 // Write results to Excel file
                 FileOutputStream outFile = new FileOutputStream(outputFilePath);

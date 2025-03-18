@@ -1,4 +1,4 @@
-package HealthCare;
+package Shopping;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -307,29 +307,7 @@ public class zeptoPharma {
 	                    
 	                    headercount++;
 
-	           //sp
 	                    Thread.sleep(2000);
-	                   try {
-	                    WebElement sp = driver.findElement(By.xpath("//div[@class='flex items-center']//h4"));
-	                    originalSp1 = sp.getText();
-	                    spValue =  originalSp1.replace("₹", "");
-	                    System.out.println(spValue);
-	                   }
-	                   catch(Exception e) {
-	                	   
-	                	   try {
-	                	   WebElement sp = driver.findElement(By.xpath("/html/body/div/div/div/div/div[2]/div/div[1]/div[2]/div[4]/div[1]/h4"));
-	                       originalSp2 = sp.getText();
-	                       spValue =  originalSp2.replace("₹", "");
-	                       System.out.println(spValue);
-	                	   }
-	                       catch(Exception exx) {
-	                    	   spValue = "NA";
-	                       }
-	                   }
-	                   
-	                   //mrp
-	                   Thread.sleep(2000);
 	                    try {
 	                    WebElement mrp = driver.findElement(By.xpath("//div[@class='flex items-center']//p"));
 	                    originalMrp1 = mrp.getText();
@@ -357,12 +335,29 @@ public class zeptoPharma {
 	                            System.out.println(mrpValue);
 	                    		}
 	                    		catch(Exception exx) {
-	                    			mrpValue = spValue;
-	                    			System.out.println(mrpValue);
+	                    			mrpValue = "NA";
 	                    		}
 	                    		}
 	                    	}
-	                    
+	                    Thread.sleep(2000);
+	                   try {
+	                    WebElement sp = driver.findElement(By.xpath("//div[@class='flex items-center']//h4"));
+	                    originalSp1 = sp.getText();
+	                    spValue =  originalSp1.replace("₹", "");
+	                    System.out.println(spValue);
+	                   }
+	                   catch(Exception e) {
+	                	   
+	                	   try {
+	                	   WebElement sp = driver.findElement(By.xpath("/html/body/div/div/div/div/div[2]/div/div[1]/div[2]/div[4]/div[1]/h4"));
+	                       originalSp2 = sp.getText();
+	                       spValue =  originalSp2.replace("₹", "");
+	                       System.out.println(spValue);
+	                	   }
+	                       catch(Exception exx) {
+	                    	   spValue = "NA";
+	                       }
+	                   }
 	                   Thread.sleep(2000);
 	                   // offer
 	                   try {
@@ -494,7 +489,7 @@ public class zeptoPharma {
 	            }
 	            
 	            // Write results to Excel file
-	            FileOutputStream outFile = new FileOutputStream(".\\Output\\Zepto Phrma Output.xlsx");
+	            FileOutputStream outFile = new FileOutputStream(".\\Output\\Zepto Phrma Output2.xlsx");
 	            resultsWorkbook.write(outFile);
 	            outFile.close();
 

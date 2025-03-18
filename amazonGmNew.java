@@ -1,4 +1,4 @@
-package Dailyrun;
+package Shopping;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,7 +21,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 
 import CommonUtility.BlinkitId;
@@ -29,14 +28,8 @@ import CommonUtility.BlinkitId;
 public class amazonGmNew {
 
 	public static void main(String[] args) throws Exception{
-    //    System.setProperty("webdriver.chrome.driver", "./Drivers//chromedriver.exe");
-//        ChromeOptions options = new ChromeOptions();
-//    	options.addArguments("--headless"); // Run Chrome in headless mode
-//    	options.addArguments("--disable-gpu"); // Disable GPU acceleration
-
-    	WebDriver driver = new ChromeDriver();
-       
-       // WebDriver driver = new ChromeDriver();
+        System.setProperty("webdriver.chrome.driver", "./Drivers//chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
 
         int count = 0;
         // int finalSp;
@@ -186,7 +179,6 @@ public class amazonGmNew {
                 	  
                     driver.get(url);
                     driver.manage().window().maximize();
-                    Thread.sleep(7000);
                     
                     
                     if(i == 0) {
@@ -242,8 +234,7 @@ public class amazonGmNew {
 							}
 						}
 					}   
-                   // Thread.sleep(2000);
-                    driver.findElement(By.tagName("body")).sendKeys(Keys.ESCAPE);
+                    
                     try {
                     	
                     WebElement nameElement = driver.findElement(By.id("productTitle"));
@@ -259,8 +250,6 @@ public class amazonGmNew {
                     	
                     }
                     System.out.println("headercount = " + headercount);
-                    
-                 
                     
                     headercount++;
                     
@@ -406,13 +395,13 @@ public class amazonGmNew {
 	                   }
                    
                    		//Screenshots 
-//                      BlinkitId screenshot = new BlinkitId();
-//	                   try {
-//	       				screenshot.screenshot(driver, "Amazon", id);
-//	       			} catch (Exception e) {
-//	       				e.fillInStackTrace();
-//	       			
-//	       			}
+                      BlinkitId screenshot = new BlinkitId();
+	                   try {
+	       				screenshot.screenshot(driver, "Amazon", id);
+	       			} catch (Exception e) {
+	       				e.fillInStackTrace();
+	       			
+	       			}
                    
                     Row resultRow = resultsSheet.createRow(rowIndex++);
                     

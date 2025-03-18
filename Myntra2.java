@@ -1,9 +1,8 @@
-package Dailyrun;
+package Shopping;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.poi.ss.formula.functions.Replace;
 import org.apache.poi.ss.usermodel.Row;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -22,15 +21,11 @@ public class Myntra2 {
 		
 		int ExceptionCount = 0;
 		
-		UserUtility userUtility = new UserUtility(UserUtility.InputDataFilePath2,"Input Data", "Locators");		
+		UserUtility userUtility = new UserUtility(UserUtility.InputDataFilePath2,"Input data", "Locators");		
 		while (rowNum < userUtility.getNoOfRows(userUtility.InputDataSheet)) {
 			try {
 				ProductDetailsScrapping2 pds = new ProductDetailsScrapping2();
-				driver = userUtility.launchBrowser(driver, false, false, false);//110015      
-				
-				
-			//	Thread.sleep(5000);
-				
+				driver = userUtility.launchBrowser(driver, false, false, false);
 				for (int i = 1; i < userUtility.getNoOfRows(userUtility.InputDataSheet); i++) {
 					//driver.manage().deleteAllCookies();
 					Row row = userUtility.InputDataSheet.getRow(rowNum);
@@ -146,14 +141,6 @@ public class Myntra2 {
 						if(NewOffer.contains("OFF") && NewOffer != " ") {
 							CrtOffer = NewOffer.replaceAll("[()]","").replaceAll("OFF", "Off");
 						}
-//						else if (NewOffer.endsWith("%")) {
-//							CrtOffer = (NewOffer.substring(0, NewOffer.length() - 1) + "% Off") ;
-//							CrtOffer = CrtOffer.replaceAll("–", "");
-//				        }
-						else if(NewOffer.contains("–") ) {
-							CrtOffer = NewOffer.replaceAll("–","").replaceAll("%", "% Off");
-						}
-						
 					/*	//String getCode = NewOffer;
 						else if(NewOffer.contains("-") && NewOffer != " ") {
 							//CrtOffer = NewOffer.replaceAll("-","").replaceAll("%", "% Off");
@@ -167,74 +154,35 @@ public class Myntra2 {
 						// Out of Stock check
 						
 						
-						String NewAvailability1=" ";
-						
 						if(NewURL.contains("NA")){
 							String result = "NA";
-							NewAvailability1=result;
-							System.out.println(NewAvailability1);
 						}	
-//						else {
-//						int result = 1;
-//						try {
-//						String xpathForMyntra = "//div[@class='pdp-add-to-bag pdp-button pdp-flex pdp-center pdp-out-of-stock ']";
-//
-//						
-//						String xpathForNykaa = "//span[@class='css-1neql7s']";
-//						
-//						boolean isElementPresent = !driver.findElements(By.xpath(xpathForMyntra)).isEmpty();   //is empty = true
-//
-//				        if (!isElementPresent) {
-//				            isElementPresent = !driver.findElements(By.xpath(xpathForNykaa)).isEmpty();
-//				        }
-//				        
-//				        //true =0,false =1 
-//
-//				        result = isElementPresent ? 0 : 1;
-//				        
-//				        System.out.println(result);
-//						}
-//						catch(Exception e) {
-//							System.out.println(e.getMessage());
-//						}
-//						
-//						//int stock = result;
-//						NewAvailability1 = String.valueOf(result);
-//						System.out.println(NewAvailability1);
-//						}
+						
+						int result = 1;
+						try {
+						String xpathForMyntra = "//div[@class='pdp-add-to-bag pdp-button pdp-flex pdp-center pdp-out-of-stock ']";
 
-						else {
-							int result = 1;
-                            try {
-                                // Define the texts to check for
-                                String[] textsToCheck = {
-                                    "This product is currently sold out", 
-                                    "Unfortunately we do not ship to your pincode"
-                                };
+						
+						String xpathForNykaa = "//span[@class='css-1neql7s']";
+						
+						boolean isElementPresent = !driver.findElements(By.xpath(xpathForMyntra)).isEmpty();
 
-                                // Get the page source
-                                String pageSource = driver.getPageSource();
-                                
-                                boolean isTextPresent = false;
+				        if (!isElementPresent) {
+				            isElementPresent = !driver.findElements(By.xpath(xpathForNykaa)).isEmpty();
+				        }
 
-                                // Check for the presence of any of the texts
-                                for (String text : textsToCheck) {
-                                    if (pageSource.contains(text)) {
-                                        isTextPresent = true;
-                                        break; 
-                                    }
-                                }
+				        result = isElementPresent ? 0 : 1;
+				        
+				        System.out.println(result);
+						}
+						catch(Exception e) {
+							System.out.println(e.getMessage());
+						}
+						
+						//int stock = result;
+						String NewAvailability1 = String.valueOf(result);
+						
 
-                                // Determine the result based on the presence of the text
-                                result = isTextPresent ? 0 : 1;
-                               // System.out.println(result);
-                            } catch (Exception e) {
-                                System.out.println("Error checking availability: " + e.getMessage());
-                                result = -1;
-                            }
-                            NewAvailability1 = String.valueOf(result);
-    						System.out.println(NewAvailability1);
-                        }
 					List<String> finalList = new ArrayList<String>();
 
 					finalList.add(InputPid);

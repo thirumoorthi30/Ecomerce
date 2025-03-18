@@ -1,4 +1,4 @@
-package Dailyrun;
+package Shopping;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.ss.usermodel.*;
@@ -12,8 +12,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -29,10 +27,8 @@ import java.util.List;
 
 public class headsupfortails {
     public static void main(String[] args) throws Exception {
-     //   ChromeOptions options = new ChromeOptions();
-     //   WebDriver driver = new ChromeDriver(options);
-    	EdgeOptions option = new EdgeOptions();
-    	WebDriver driver = new EdgeDriver(option);
+        ChromeOptions options = new ChromeOptions();
+        WebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
@@ -51,7 +47,7 @@ public class headsupfortails {
         try (FileInputStream file = new FileInputStream(".\\input-data\\headsupforTail Input data.xlsx");
              Workbook urlsWorkbook = new XSSFWorkbook(file)) {
 
-            Sheet urlsSheet = urlsWorkbook.getSheet("HeadsUp1");//Delhi
+            Sheet urlsSheet = urlsWorkbook.getSheet("Sample");
             int rowCount = urlsSheet.getPhysicalNumberOfRows();
 
             // Extract URLs from Excel
@@ -82,8 +78,6 @@ public class headsupfortails {
 
             int ProductCOUNT = 0;
 
-            
-            
             // Main data extraction logic
             for (int i = 0; i < uRL.size(); i++) {
                 String url = uRL.get(i);
@@ -239,7 +233,7 @@ public class headsupfortails {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
             String timestamp = dateFormat.format(new Date());
-            String outputFilePath = ".\\Output\\HeadUpTail_OutputData_Delhi" + timestamp + ".xlsx";
+            String outputFilePath = ".\\Output\\HeadUpTail_OutputData_" + timestamp + ".xlsx";
 
             // Write results to Excel file
             try (FileOutputStream outFile = new FileOutputStream(outputFilePath)) {

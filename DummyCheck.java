@@ -1,4 +1,4 @@
-package Dailyrun;
+package Shopping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +21,13 @@ public class DummyCheck {
 		// Input data (2) -- flipkart
 		// Input data -- Amazon
 		
-		UserUtility userUtility = new UserUtility(UserUtility.InputDataFilePath5, "Input data (2)", "Locators");
+		UserUtility userUtility = new UserUtility(UserUtility.InputDataFilePath3, "Input data (2)", "Locators");
 		while (rowNum < userUtility.getNoOfRows(userUtility.InputDataSheet)) {
 			try {
 				ProductDetailsScrapping2 pds = new ProductDetailsScrapping2();
 				driver = userUtility.launchBrowser(driver, false, false, false);
 				for (int i = 1; i < userUtility.getNoOfRows(userUtility.InputDataSheet); i++) {
-					Row row = userUtility.InputDataSheet.getRow(rowNum);//110015
+					Row row = userUtility.InputDataSheet.getRow(rowNum);
 
 					String InputBrandName = row.getCell(0).getStringCellValue().trim();
 					String InputPid = row.getCell(1).getStringCellValue().trim();
@@ -117,18 +117,6 @@ public class DummyCheck {
 							sellingPriceValidation = OldSP;
 							OldNameCheck = OldName;
 						}
-						
-//						 boolean isOutOfStock = pds.checkAvailability(driver);
-//					        
-//						 if (isOutOfStock) { // Check if isOutOfStock is true
-//							    // Return 0 if the item is out of stock (isOutOfStock is true)
-//							    int stockStatus = 0; // Since isOutOfStock is true, we set stockStatus to 0
-//							    NewAvailability = String.valueOf(stockStatus); // Convert stockStatus to String
-//							} else {
-//							    // If the item is available, set stockStatus to 1
-//							    int stockStatus = 1;
-//							    NewAvailability = String.valueOf(stockStatus); // Convert stockStatus to String
-//							}
 						
 						
 						  if(NewMRP == NewSP) { 

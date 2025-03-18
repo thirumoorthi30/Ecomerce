@@ -1,4 +1,4 @@
-package Dailyrun;
+package Shopping;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -49,7 +49,7 @@ public class firstCryDiaperOffer {
             String filePath = ".\\input-data\\firstcryDiaDel.xlsx";
             FileInputStream file = new FileInputStream(filePath);
             Workbook urlsWorkbook = new XSSFWorkbook(file);
-            Sheet urlsSheet = urlsWorkbook.getSheet("FirstCry2");
+            Sheet urlsSheet = urlsWorkbook.getSheet("");
             int rowCount = urlsSheet.getPhysicalNumberOfRows();
 
 	            List<String> inputPid = new ArrayList<>(),InputCity = new ArrayList<>(),InputName = new ArrayList<>(),InputSize = new ArrayList<>(),NewProductCode = new ArrayList<>(),
@@ -209,18 +209,19 @@ public class firstCryDiaperOffer {
                      
                 	  driver.get(url);
                 	  
-                	  String addToCartButtonXPath1 = "/html/body/div[5]/div[2]/div/div[2]/div[7]/div/div[2]/div[2]/div[1]/div/span[1]/span";
-                	  String addToCartButtonXPath2 = "/html/body/div[5]/div/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div/span[1]/span";
+                	  String addToCartButtonXPath1 = "/html/body/app-productdetail-rvp/span/section[1]/section/section[1]/div[3]/div/div[2]/span";
+                	 // String addToCartButtonXPath2 = "/html/body/div[5]/div/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div/span[1]/span";
                 	  WebElement addToCartButton = null;
 
                 	  try {
                 	      addToCartButton = driver.findElement(By.xpath(addToCartButtonXPath1));
                 	  } catch (NoSuchElementException e1) {
-                	      try {
-                	          addToCartButton = driver.findElement(By.xpath(addToCartButtonXPath2));
-                	      } catch (NoSuchElementException e2) {
-                	          System.out.println("Add to cart button not found.");
-                	      }
+                		  System.out.println("Add to cart button not found.");
+//                	      try {
+//                	          addToCartButton = driver.findElement(By.xpath(addToCartButtonXPath2));
+//                	      } catch (NoSuchElementException e2) {
+//                	          System.out.println("Add to cart button not found.");
+//                	      }
                 	  }
                 	  
                 	  if (addToCartButton != null && addToCartButton.isEnabled() && addToCartButton.isDisplayed()) {
@@ -228,7 +229,7 @@ public class firstCryDiaperOffer {
                 	  
                       try {
                       	
-                      WebElement nameElement = driver.findElement(By.id("prod_name"));
+                      WebElement nameElement = driver.findElement(By.xpath("//h1[@class='J14M_42 cl_21 nonfastionpname']"));
                       newName = nameElement.getText();
                       System.out.println(newName);
                       }
@@ -236,7 +237,7 @@ public class firstCryDiaperOffer {
                       catch(org.openqa.selenium.NoSuchElementException e) {
                     	  try {
                       	
-                      	WebElement nameElement = driver.findElement(By.xpath("//div[@class = 'prod-info-wrap']//following::p[1]"));
+                      	WebElement nameElement = driver.findElement(By.xpath("//h1"));
                       	newName = nameElement.getText();
                           System.out.println(newName);
                     	  }
@@ -276,7 +277,7 @@ public class firstCryDiaperOffer {
                       	
                       }
                       Thread.sleep(2000);
-                      List<WebElement> divElements = driver.findElements(By.xpath("//div[@class='cpn_offrs_disc_section']//div[@class='swiper-slide']"));
+                      List<WebElement> divElements = driver.findElements(By.xpath("//div[@class='dfpinner cpncode_block']//div[@class='dfpcoupan']"));
                       Map<String, List<String>> keyValueMap = new LinkedHashMap<>(); // Use LinkedHashMap to maintain insertion order
                       List<String> last7CharsList = new ArrayList<>();
                       int divCount = divElements.size();
@@ -289,10 +290,10 @@ public class firstCryDiaperOffer {
 
                       for (int j = 1; j <= divCount; j++) {
                           try {
-                              String xpath = "(//div[@class='cpn_offrs_disc_section']//div[@class='swiper-slide'])[" + j + "]";
+                              String xpath = "(//div[@class='dfpinner cpncode_block']//div[@class='dfpcoupan'])[" + j + "]";
 
                               WebElement offerElement = wait.until(ExpectedConditions.visibilityOfElementLocated(
-                                      By.xpath(xpath + "//div[@class='club-txt-logo']/parent::div/span")
+                                      By.xpath(xpath + "//div[@class='dfpinner cpncode_block']//div[@class='savcpn ']//span")
                               ));
                               String offer = offerElement.getText();
                               
@@ -342,7 +343,7 @@ public class firstCryDiaperOffer {
                                               System.out.println("Last 7 Characters Before Last '*': " + last7Chars);
                                           }
 
-                                          String codeXpath = xpath + "//ancestor::div[@class='save_cpn_header']/following-sibling::div//div[contains(@class,'cpn_code_box')]";
+                                          String codeXpath = xpath + "//div[@class='cpninfo cpncode_btns']//div[@class='cpnname J13SB_42 cl_fff bg_29']";
                                           WebElement codeElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(codeXpath)));
                                           code = codeElement.getText(); 
                                           System.out.println("Coupon Code: " + code);
@@ -370,9 +371,9 @@ public class firstCryDiaperOffer {
 
                       try {
                           Thread.sleep(1000);
-                          driver.findElement(By.xpath("(//span[@class='step1 M16_white'])[1]//span")).click();
+                          driver.findElement(By.xpath("//div[@class='addgotoText btn_fill add_to_cart']//span")).click();
                           Thread.sleep(1000);
-                          driver.findElement(By.xpath("(//span[@class='step2 M16_white'])[1]")).click();
+                          driver.findElement(By.xpath("//div[@class='addgotoText btn_fill go_to_cart']//span")).click();
                       } catch (NoSuchElementException e) {
                       }
 
@@ -537,20 +538,20 @@ public class firstCryDiaperOffer {
                           
                 		  try {
                             	
-                              WebElement nameElement = driver.findElement(By.id("prod_name"));
+                              WebElement nameElement = driver.findElement(By.xpath("//h1[@class='J14M_42 cl_21 nonfastionpname']"));
                               newName = nameElement.getText();
                               System.out.println(newName);
                               }
                               
                               catch(org.openqa.selenium.NoSuchElementException e) {
-                              	WebElement nameElement = driver.findElement(By.xpath("//div[@class = 'prod-info-wrap']//following::p[1]"));
+                              	WebElement nameElement = driver.findElement(By.xpath("//h1"));
                               	newName = nameElement.getText();
                                   System.out.println(newName);
                               	
                               }
                               
                               try {
-                              WebElement mrp = driver.findElement(By.xpath("//*[@id=\"original_mrp\"]"));
+                              WebElement mrp = driver.findElement(By.xpath("//span[@class='newmrp ']//del"));
                               mrpValue = mrp.getText();
                               System.out.println(mrpValue);
                               
@@ -558,14 +559,14 @@ public class firstCryDiaperOffer {
                               
                               catch(org.openqa.selenium.NoSuchElementException e){
                               	
-                                  WebElement mrp = driver.findElement(By.xpath("/html/body/div[5]/div/div[2]/div[2]/div[2]/div[2]/span[4]/span[3]"));
+                                  WebElement mrp = driver.findElement(By.xpath("//*[@id=\"prodImgInfo\"]/section[2]/section[1]/p[1]/span[5]/span[1]/del"));
                                   mrpValue = mrp.getText();                            
                                   System.out.println(mrpValue);
                               	
                               }
                           Thread.sleep(500);
                           
-                          WebElement sp = driver.findElement(By.xpath("//*[@id='prod_price']"));
+                          WebElement sp = driver.findElement(By.xpath("prod-price J15B_42  cl_21"));
                          spValue = sp.getText();
                          System.out.println("+++++++++++" + spValue);
                           finalSp = spValue;

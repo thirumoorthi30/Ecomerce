@@ -1,4 +1,4 @@
-package citywise;
+package Web8Scrapping;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -413,14 +413,14 @@ public class BB8 {
                    
                    
                    
-                   		//Screenshots 
+             /*      		//Screenshots 
                       BlinkitId screenshot = new BlinkitId();
 	                   try {
 	       				screenshot.screenshot(driver, "Bigbasket", id);
 	       			} catch (Exception e) {
 	       				e.fillInStackTrace();
 	       			
-	       			}
+	       			} */
                    
                     Row resultRow = resultsSheet.createRow(rowIndex++);
                     

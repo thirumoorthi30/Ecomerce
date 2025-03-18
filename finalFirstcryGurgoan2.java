@@ -1,4 +1,4 @@
-package Dailyrun;
+package Shopping;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -186,34 +186,44 @@ public class finalFirstcryGurgoan2 {
                     }
                     
                     try {
-                    	Thread.sleep(500);
-                    	//for (int j = 0; j < 150; j++) {
+                    Thread.sleep(500);
+                    
+                    //for (int j = 0; j < 150; j++) {
+                       //  driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
+                     	driver.findElement(By.xpath("//*[@id=\"p_breadcrumb\"]/div[2]/div/div[2]/div[6]/div/div[2]/div[2]/div[1]/div/span[1]")).click();
+                 		
+                     	 Thread.sleep(1000); 
+                     	
+                 		driver.findElement(By.xpath("//*[@id=\"p_breadcrumb\"]/div[2]/div/div[2]/div[6]/div/div[2]/div[2]/div[1]/div/span[2]")).click();
+                 		
+                        // driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
+                        // break;
+                   //  }
+                    }
+                    catch(NoSuchElementException e){
                     	// driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
-                    	driver.findElement(By.xpath("(//span[@class='step1 M16_white'])[1]//span")).click();
-                    	Thread.sleep(1000);
-                    	driver.findElement(By.xpath("(//span[@class='step2 M16_white'])[1]")).click();
-                    	// driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
-                    	// break;
-                    	// }
-                    	}
-                    	catch(NoSuchElementException e){
-                    	// driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
+                    	
                     	try {
-                    	Thread.sleep(500);
-                    	driver.findElement(By.xpath("//*[@id=\"p_breadcrumb\"]/div[2]/div/div[2]/div[7]/div/div[2]/div[2]/div[1]/div/span[1]/span")).click();
-                    	Thread.sleep(2000);
-                    	// driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
-                    	driver.findElement(By.xpath("//*[@id=\"p_breadcrumb\"]/div[2]/div/div[2]/div[7]/div/div[2]/div[2]/div[1]/div/span[2]")).click();
+                    		Thread.sleep(500);
+                        	driver.findElement(By.xpath("/html/body/div[5]/div/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div/span[1]")).click();
+                     		
+                        	 Thread.sleep(1000); 
+                        	// driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
+                    		driver.findElement(By.xpath("/html/body/div[5]/div/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div/span[2]")).click();
+                    		
                     	}
                     	catch(NoSuchElementException ex) {
-                    	Thread.sleep(500);
-                    	// driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
-                    	driver.findElement(By.xpath("/html/body/div[5]/div[2]/div/div[2]/div[7]/div/div[2]/div[2]/div[1]/div/span[1]/span")).click();
-                    	Thread.sleep(2000);
-                    	// driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
-                    	driver.findElement(By.xpath("/html/body/div[5]/div[2]/div/div[2]/div[7]/div/div[2]/div[2]/div[1]/div/span[2]")).click();
+                    		Thread.sleep(500);
+                        	// driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
+                        	driver.findElement(By.xpath("//*[@id=\"p_breadcrumb\"]/div[2]/div/div[2]/div[5]/div/div[2]/div[2]/div[1]/div/span[1]")).click();
+                     		
+                        	 Thread.sleep(1000); 
+                        	// driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
+                    		driver.findElement(By.xpath("//*[@id=\"p_breadcrumb\"]/div[2]/div/div[2]/div[5]/div/div[2]/div[2]/div[1]/div/span[2]")).click();
+                    		
                     	}
-                    	}
+                		
+                    }
                     //catch the 2 product has the different xpath for add to card
                     catch(Exception ex){
                     	

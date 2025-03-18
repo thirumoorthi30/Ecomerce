@@ -1,4 +1,4 @@
-package Dailyrun;
+package Shopping;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -39,7 +39,7 @@ public class flipElectronicsNew {
           String NewAvailability1 = " ";
         try {
             // Read URLs from Excel file
-            String filePath = ".\\input-data\\amazonProSer.xlsx";
+            String filePath = ".\\input-data\\flip Elect input.xlsx";
             FileInputStream file = new FileInputStream(filePath);
             Workbook urlsWorkbook = new XSSFWorkbook(file);
             Sheet urlsSheet = urlsWorkbook.getSheet("Sheet1");
@@ -167,8 +167,9 @@ public class flipElectronicsNew {
                     driver.get(url);
                     driver.manage().window().maximize();
                     
-				/*	if(i == 0 || i == 1) {
-					
+					if(i == 0 || i == 1) {
+					/*	WebElement location = driver.findElement(By.xpath("//*[@id=\"container\"]/div/div[3]/div[1]/div[2]/div[5]/div/div/div[1]/div[2]/div/div[2]/div[1]/form"));
+						location.click();*/
 						String tempPinNumber = "";    
 						for (int j = 0; j < 150; j++) {
 							try {
@@ -186,7 +187,9 @@ public class flipElectronicsNew {
 										By.xpath("/html/body/div[1]/div/div[3]/div[1]/div[2]/div[5]/div/div/div[1]/div[2]/div/div[2]/div/form/input"))
 										.sendKeys("110015");
 								
-							
+							/*	driver.findElement(
+										By.xpath("//div[@id='GLUXZipInputSection']//input[@id='GLUXZipUpdateInput']"))
+										.sendKeys(Keys.ENTER);   */
 								
 										Thread.sleep(2000);								
 								
@@ -213,7 +216,7 @@ public class flipElectronicsNew {
 								}
 							}
 						}
-					}   */
+					}   
                     
                     try {
                     	

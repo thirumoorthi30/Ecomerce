@@ -1,4 +1,4 @@
-package Dailyrun;
+package Shopping;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -171,7 +171,7 @@ public class amaElectronicsNewCode {
                         Thread.sleep(10000);                    }    
                     
                     
-				if(i == 0 || i == 1) {
+					if(i == 0 || i == 1) {
 						WebElement location = driver.findElement(By.id("contextualIngressPtPin"));
 						location.click();
 						String tempPinNumber = "";
@@ -191,7 +191,9 @@ public class amaElectronicsNewCode {
 										By.xpath("//div[@id='GLUXZipInputSection']//input[@id='GLUXZipUpdateInput']"))
 										.sendKeys("110015");
 								
-						
+							/*	driver.findElement(
+										By.xpath("//div[@id='GLUXZipInputSection']//input[@id='GLUXZipUpdateInput']"))
+										.sendKeys(Keys.ENTER);   */
 								
 								for (int k = 0; k <= 50; k++) {
 									try {

@@ -1,4 +1,4 @@
-package Dailyrun;
+package Shopping;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -32,7 +32,7 @@ public class finalFirstcryDelhi {
             String filePath = ".\\input-data\\firstcryDiaDel.xlsx";
             FileInputStream file = new FileInputStream(filePath);
             Workbook urlsWorkbook = new XSSFWorkbook(file);
-            Sheet urlsSheet = urlsWorkbook.getSheet("Sheet3");
+            Sheet urlsSheet = urlsWorkbook.getSheet("Sheet2");
             int rowCount = urlsSheet.getPhysicalNumberOfRows();
 
 	            List<String> inputPid = new ArrayList<>(),InputCity = new ArrayList<>(),InputName = new ArrayList<>(),InputSize = new ArrayList<>(),NewProductCode = new ArrayList<>(),
@@ -143,7 +143,7 @@ public class finalFirstcryDelhi {
                     
                     WebElement clickLocation = driver.findElement(By.xpath("//*[@id=\"nonlpincode\"]"));
                     clickLocation.clear();
-                    clickLocation.sendKeys("110015");
+                    clickLocation.sendKeys("500001");
                     
                     WebElement clickApply = driver.findElement(By.xpath("//*[@id=\"epincode\"]/div"));
                     clickApply.click();
@@ -174,7 +174,7 @@ public class finalFirstcryDelhi {
                     
                     
                     try {
-                    WebElement mrp = driver.findElement(By.xpath("//div[@id='grouping-html']//span[@class='pos-rel2stat new-mrp-wrap']//span[@class='pmr R20_75 pos-rel2stat']"));
+                    WebElement mrp = driver.findElement(By.xpath("//*[@id=\"original_mrp\"]"));
                     mrpValue = mrp.getText();
                     System.out.println(mrpValue);
                     
@@ -182,11 +182,10 @@ public class finalFirstcryDelhi {
                     
                     catch(org.openqa.selenium.NoSuchElementException e){
                     	
-                    	mrpValue ="NA";
-//                        WebElement mrp = driver.findElement(By.xpath("/html/body/div[5]/div/div[2]/div[2]/div[2]/div[2]/span[4]/span[3]"));
-//                        mrpValue = mrp.getText();                            
-//                        System.out.println(mrpValue);
-//                    	
+                        WebElement mrp = driver.findElement(By.xpath("/html/body/div[5]/div/div[2]/div[2]/div[2]/div[2]/span[4]/span[3]"));
+                        mrpValue = mrp.getText();                            
+                        System.out.println(mrpValue);
+                    	
                     }
                     
                     try {
@@ -194,11 +193,11 @@ public class finalFirstcryDelhi {
                     
                     //for (int j = 0; j < 150; j++) {
                        //  driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
-                     	driver.findElement(By.xpath("(//span[@class='step1 M16_white'])[1]//span")).click();
+                     	driver.findElement(By.xpath("//*[@id=\"p_breadcrumb\"]/div[2]/div/div[2]/div[6]/div/div[2]/div[2]/div[1]/div/span[1]")).click();
                  		
                      	 Thread.sleep(1000); 
                      	
-                 		driver.findElement(By.xpath("(//span[@class='step2 M16_white'])[1]")).click();
+                 		driver.findElement(By.xpath("//*[@id=\"p_breadcrumb\"]/div[2]/div/div[2]/div[6]/div/div[2]/div[2]/div[1]/div/span[2]")).click();
                  		
                         // driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
                         // break;
@@ -209,21 +208,21 @@ public class finalFirstcryDelhi {
                     	
                     	try {
                     		Thread.sleep(500);
-                        	driver.findElement(By.xpath("//*[@id=\"p_breadcrumb\"]/div[2]/div/div[2]/div[7]/div/div[2]/div[2]/div[1]/div/span[1]/span")).click();
+                        	driver.findElement(By.xpath("/html/body/div[5]/div/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div/span[1]")).click();
                      		
-                        	 Thread.sleep(1500); 
+                        	 Thread.sleep(2000); 
                         	// driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
-                    		driver.findElement(By.xpath("//*[@id=\"p_breadcrumb\"]/div[2]/div/div[2]/div[7]/div/div[2]/div[2]/div[1]/div/span[2]")).click();
+                    		driver.findElement(By.xpath("/html/body/div[5]/div/div[2]/div[1]/div[1]/div[2]/div[2]/div[1]/div/span[2]")).click();
                     		
                     	}
                     	catch(NoSuchElementException ex) {
                     		Thread.sleep(500);
                         	// driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
-                        	driver.findElement(By.xpath("/html/body/div[5]/div[2]/div/div[2]/div[7]/div/div[2]/div[2]/div[1]/div/span[1]/span")).click();
+                        	driver.findElement(By.xpath("//*[@id=\"p_breadcrumb\"]/div[2]/div/div[2]/div[5]/div/div[2]/div[2]/div[1]/div/span[1]")).click();
                      		
-                        	 Thread.sleep(1500); 
+                        	 Thread.sleep(2000); 
                         	// driver.findElement(By.xpath("//select[@id =\"product_qty\"]/ancestor::span")).click();
-                    		driver.findElement(By.xpath("/html/body/div[5]/div[2]/div/div[2]/div[7]/div/div[2]/div[2]/div[1]/div/span[2]")).click();
+                    		driver.findElement(By.xpath("//*[@id=\"p_breadcrumb\"]/div[2]/div/div[2]/div[5]/div/div[2]/div[2]/div[1]/div/span[2]")).click();
                     		
                     	}
                 		
@@ -238,12 +237,12 @@ public class finalFirstcryDelhi {
                         
                         Thread.sleep(500);
                         
-                        WebElement mrp = driver.findElement(By.xpath("//div[@id='grouping-html']//span[@class='pos-rel2stat new-mrp-wrap']//span[@class='pmr R20_75 pos-rel2stat']"));
+                        WebElement mrp = driver.findElement(By.xpath("//*[@id=\"original_mrp\"]"));
                         mrpValue = mrp.getText();
                         
                         Thread.sleep(1000);
                         
-                        WebElement sp = driver.findElement(By.xpath("//div[@class='div-prod-price']//span[@class='prod-price pmr B20_42 B20_blue prodmprc']"));
+                        WebElement sp = driver.findElement(By.xpath("//*[@id=\"prod_price\"]"));
                        spValue = sp.getText();
                        System.out.println("+++++++++++" + spValue);
                         finalSp = spValue;
@@ -274,7 +273,7 @@ public class finalFirstcryDelhi {
                     
                   //  if(count != 1 ) {
                    
-                    WebElement rate = driver.findElement(By.id("fnl_pymnt"));
+                    WebElement rate = driver.findElement(By.className("fnl_pymnt"));
                     rateValue = rate.getText();
                     System.out.println(rateValue);
                     finalSp = rateValue;
@@ -291,7 +290,7 @@ public class finalFirstcryDelhi {
                             	Thread.sleep(4000); 
                                 //driver.findElement(By.xpath("//*[@id=\"garem_3312344\"]")).click();
                                 
-                             WebElement remove = driver.findElement(By.xpath("//div[@class='short_prod newshort']//div[@class='new-shortone shortcomm']"));
+                             WebElement remove = driver.findElement(By.xpath("//*[@id=\"productlist\"]/div/div[6]/div[1]/span[2]"));
                            //*[@id="productlist"]/div/div[3]/div[1]/span[2]
                             // Thread.sleep(1000);
                              
@@ -303,7 +302,7 @@ public class finalFirstcryDelhi {
                             	Thread.sleep(4000); 
                                 //driver.findElement(By.xpath("//*[@id=\"garem_3312344\"]")).click();
                                 
-                             WebElement remove = driver.findElement(By.xpath("//div[@class='short_prod newshort']//div[@class='new-shortone shortcomm']"));
+                             WebElement remove = driver.findElement(By.xpath("//*[@id=\"productlist\"]/div/div[3]/div[1]/span[2]"));
                            //*[@id="productlist"]/div/div[3]/div[1]/span[2]
                            //  Thread.sleep(1000);
                              
@@ -350,7 +349,7 @@ public class finalFirstcryDelhi {
             }
             
             // Write results to Excel file
-            FileOutputStream outFile = new FileOutputStream(".\\Output\\Firstcry Dia OutputData_FirstHalf.xlsx");
+            FileOutputStream outFile = new FileOutputStream(".\\Output\\Firstcry Dia outputData.xlsx");
             resultsWorkbook.write(outFile);
             outFile.close();
 

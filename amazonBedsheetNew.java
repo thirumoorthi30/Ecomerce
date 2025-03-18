@@ -1,4 +1,4 @@
-package Dailyrun;
+package Shopping;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -173,21 +173,10 @@ public class amazonBedsheetNew {
                     driver.get(url);
                     driver.manage().window().maximize();
                     
+                    
                     if(i == 0) {
-                    try {
-                    	Thread.sleep(1000);
-                    
-                    driver.findElement(By.xpath("//a[.='Try different image']")).click();
-                    
+                    	Thread.sleep(9000);
                     }
-                    catch (Exception e) {
-						System.out.println("No CAPTCH Found!");
-					}
-                    }
-                    if(i == 0) {
-                    	Thread.sleep(2000);
-                    }
-                    
                     
                     
 					if(i == 0 || i == 1) {

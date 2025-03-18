@@ -1,4 +1,4 @@
-package HealthCare;
+package Shopping;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -42,7 +42,7 @@ public class Apollo {
             String filePath = ".\\input-data\\Phrma input data.xlsx";
             FileInputStream file = new FileInputStream(filePath);
             Workbook urlsWorkbook = new XSSFWorkbook(file);
-            Sheet urlsSheet = urlsWorkbook.getSheet("Apollo2");
+            Sheet urlsSheet = urlsWorkbook.getSheet("Apollo");
             int rowCount = urlsSheet.getPhysicalNumberOfRows();
 
 	            List<String> inputPid = new ArrayList<>(),InputCity = new ArrayList<>(),InputName = new ArrayList<>(),InputSize = new ArrayList<>(),NewProductCode = new ArrayList<>(),
@@ -207,13 +207,13 @@ public class Apollo {
      					for (int j = 0; j < 200; j++) {
      						try {
      							driver.findElement(
-     									By.xpath("/html/body/div[8]/div[2]/div/div[2]/div/div[2]/div[1]/input"))
+     									By.xpath("//*[@id=\"headlessui-dialog-panel-:r1:\"]/div[2]/div/div[2]/div[1]/input"))
      									.sendKeys(Keys.ENTER);
      							
      							Thread.sleep(3000);
      							
      							driver.findElement(
-     									By.xpath("/html/body/div[8]/div[2]/div/div[2]/div/div[2]/div[1]/input")).clear();
+     									By.xpath("//*[@id=\"headlessui-dialog-panel-:r1:\"]/div[2]/div/div[2]/div[1]/input")).clear();
       							Thread.sleep(3000);
      							
      							System.out.println("print the crt pin number" + locationSet);
@@ -221,7 +221,7 @@ public class Apollo {
      							Thread.sleep(5000);
      							String crtPin = locationSet;
      							driver.findElement(
-     									By.xpath("/html/body/div[8]/div[2]/div/div[2]/div/div[2]/div[1]/input"))
+     									By.xpath("//*[@id=\"headlessui-dialog-panel-:r1:\"]/div[2]/div/div[2]/div[1]/input"))
      									.sendKeys(crtPin);
      							
      							
@@ -268,14 +268,14 @@ public class Apollo {
                     
                     try {
                     	
-                    WebElement nameElement = driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div/h1"));
+                    WebElement nameElement = driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[2]/div/h1"));
                     newName = nameElement.getText();
                     System.out.println(newName);
                     }
                     
                     catch(NoSuchElementException e) {
                     	
-                    	WebElement nameElement = driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div/h1"));
+                    	WebElement nameElement = driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[1]/div[1]/div[2]/div[1]/div[2]/div[2]/div/h1"));
                     	newName = nameElement.getText();
                         System.out.println(newName);
                     	
@@ -285,9 +285,9 @@ public class Apollo {
                     headercount++;
                     
                     try {
-                    WebElement mrp = driver.findElement(By.xpath("//div[@class='PdpWeb_addToCartSection__RGnBF']//div[@class='Hl_  cd  ']//p[2]"));
+                    WebElement mrp = driver.findElement(By.xpath("//*[@id=\"PDP price banner\"]/div/div/div[1]/div/p[2]"));
                     originalMrp1 = mrp.getText();
-                    mrpValue = originalMrp1.replace("MRP ₹", "");
+                    mrpValue = originalMrp1.replace("MRP:", "");
                     System.out.println(mrpValue);
                     
                     } 
@@ -295,48 +295,48 @@ public class Apollo {
                     catch(NoSuchElementException e){ 
                     	try {
                     		
-                    		WebElement mrp = driver.findElement(By.xpath("//div[@class='PdpWeb_addToCartSection__RGnBF']//div[@class='Hl_  cd  sd']//p[2]"));
+                    		WebElement mrp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[1]/span[2]/span[2]/span[2]"));
                             originalMrp2 = mrp.getText();
-                            mrpValue = originalMrp2.replace("MRP ₹", "");
+                            mrpValue = originalMrp2.replace("MRP:", "");
                            // mrpValue = originalMrp2;                      
                             System.out.println(mrpValue);
                         
                     }
                     	catch(Exception ex) {
-//                    		try {
-//                    		WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]"));
-//                           // WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]"));
-//                    		originalMrp3 = mrp.getText();
-//                    		if(originalMrp3.contains("₹")){   //  /html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]
-//                    			 mrpValue = originalMrp3.replace("₹", "");
-//                    		}else {
-//                    			mrpValue = originalMrp3;
-//                    		}   
-//                            System.out.println(mrpValue);
-//                    		}
-//                    		catch(Exception exx) {
-//                    			//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[2]/span/span[1]/span[2]/span/span[2]
-//                    			try {
-//                            		WebElement mrp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[2]/span/span[1]/span[2]/span/span[2]"));
-//                            		originalMrp3 = mrp.getText();
-//                            		if(originalMrp3.contains("₹")){
-//                            			 mrpValue = originalMrp3.replace("₹", "");
-//                            		}else {
-//                            			mrpValue = originalMrp3;
-//                            		}   
-//                                    System.out.println(mrpValue);
-//                            		}
-//                            		catch(Exception exxR) {
-//                            			mrpValue = "NA";
-//                            		}
-//                    		}
+                    		try {
+                    		WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]"));
+                           // WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]"));
+                    		originalMrp3 = mrp.getText();
+                    		if(originalMrp3.contains("₹")){   //  /html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]
+                    			 mrpValue = originalMrp3.replace("MRP:", "");
+                    		}else {
+                    			mrpValue = originalMrp3;
+                    		}   
+                            System.out.println(mrpValue);
+                    		}
+                    		catch(Exception exx) {
+                    			//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[2]/span/span[1]/span[2]/span/span[2]
+                    			try {
+                            		WebElement mrp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[2]/span/span[1]/span[2]/span/span[2]"));
+                            		originalMrp3 = mrp.getText();
+                            		if(originalMrp3.contains("MRP ₹")){
+                            			 mrpValue = originalMrp3.replace("MRP", "");
+                            		}else {
+                            			mrpValue = originalMrp3;
+                            		}   
+                                    System.out.println(mrpValue);
+                            		}
+                            		catch(Exception exxR) {
+                            			mrpValue = "NA";
+                            		}
+                    		}
                     		}
                     	}
                     
                    try {
-                    WebElement sp = driver.findElement(By.xpath("//div[@class='PdpWeb_addToCartSection__RGnBF']//div[@class='Hl_  cd  ']//p[1]"));
+                    WebElement sp = driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[1]/div[2]/div/div[1]/div[1]/div/div/div[1]/div/p[1]"));
                     originalSp1 = sp.getText();
-                    spValue =  originalSp1.replace("MRP: ₹", "").replace("*", "").replace("₹", "");
+                    spValue =  originalSp1.replace("MRP", "");
                     System.out.println(spValue);
                     
            /*         if(mrpValue == spValue) {
@@ -349,80 +349,82 @@ public class Apollo {
                    catch(Exception e) {
                 	 //*[@id="corePriceDisplay_desktop_feature_div"]/div[1]/span[2]/span[2]/span[2]
                 	   try {
-                	   WebElement sp = driver.findElement(By.xpath("//div[@class='PdpWeb_addToCartSection__RGnBF']//div[@class='Hl_  cd  sd']//p[1]"));
+                	   WebElement sp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[1]/span[3]/span[2]/span[2]"));
                        originalSp2 = sp.getText();
-                       String spValue1 =  originalSp2.replace("*", "");
-                       spValue = spValue1.replace("₹", "");
-                       
+                       spValue =  originalSp2.replace("*", "");
                        System.out.println(spValue);
                 	   }
                        catch(Exception exx) {
+                    	   try {
+                    		   WebElement sp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[1]/span[2]/span[2]/span[2]"));
+                               originalSp2 = sp.getText();
+                               spValue =  originalSp2.replace("*", "");
+                               System.out.println(spValue);
+                    	   }
                     	   
-//                    	   try {
-//                    		   WebElement sp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[1]/span[2]/span[2]/span[2]"));
-//                               originalSp2 = sp.getText();
-//                               spValue =  originalSp2.replace("₹", "");
-//                               System.out.println(spValue);
-//                    	   }
-//                    	   
-//                    		   catch(Exception ex) {
-//                    			   spValue = mrpValue;
-//                    		   }
+                    		   catch(Exception ex) {
+                    			   spValue = mrpValue;
+                    		   }
                            }
                     	  
                        }
                    
+                 //Out Of Stocks
                    if(url.contains("NA")){
-                	   String result = "NA";
-                	   }
-                	   String result="NA";
-                	   try {
-                	   //WebElement cartbtn = driver.findElement(By.xpath("//*[@id=\"add to cart banner\"]/div/div/div[2]/span"));
-                	   WebElement cartbtn=driver.findElement(By.xpath("//*[contains(text(), 'This item is currently unavailable at your Pincode.')]"));
-                	   if(cartbtn.isDisplayed()) {
-                	   result="0";
-                	   }}
-                	   catch(Exception s){
-                	   result="1";
-                	   }
-                	   //int stock = result;
-                	   NewAvailability1 = String.valueOf(result);
-                	   System.out.println(result);
+						String result = "NA";
+					}	
+					
+					int result = 1;
+					try {
+					String xpathForAmazon = "//*[@id=\"add to cart banner\"]/div/div/div[2]/span";
+
+					
+					boolean isElementPresent = !driver.findElements(By.xpath(xpathForAmazon)).isEmpty();
+
+			        result = isElementPresent ? 1 : 0;
+			        
+			        System.out.println(result);
+					}
+					catch(Exception e) {
+						System.out.println(e.getMessage());
+					}
+					
+					//int stock = result;
+					NewAvailability1 = String.valueOf(result);
+                   
                    // OFFER
                 
-				/*	if(mrpValue.equals(spValue)){
+					if(mrpValue.equals(spValue)){
 	                	   offerValue = "NA";
 	                   }
 	                   else {
 	                   try {
-	                	   WebElement offer = driver.findElement(By.xpath("//div[@class='PdpWeb_addToCartSection__RGnBF']//div[@class='fL   ']//p[3]"));
+	                	   WebElement offer = driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[1]/div[2]/div/div[1]/div[1]/div/div/div[1]/div/p[3]"));
 	                       String originalOffer = offer.getText();
-	                       offerValue = originalOffer.replace("% off","% Off");
+	                       offerValue = originalOffer.replace("-","").replace("%","% Off");
 	                       
 	                          System.out.println(offerValue);
 	                      
 	                      }
 	                      catch(Exception e) {
 	                    	  try {
-	                    	  WebElement offer = driver.findElement(By.xpath("//div[@class='PdpWeb_addToCartSection__RGnBF']//div[@class='J__  jL  ']//p[3]"));
+	                    	  WebElement offer = driver.findElement(By.xpath("/html/body/div[2]/div[2]/div[1]/div[2]/div/div[1]/div[1]/div/div/div[1]/div/p[3]"));
 	                          String getOffer = offer.getText();
-	                          
-	                          offerValue = getOffer.replace("% off","% Off");
-//	                          Pattern pattern = Pattern.compile("\\((.*?)\\)");
-//	   						Matcher matcher = pattern.matcher(getOffer);      
-//	   						
-//	   						if(matcher.find()) { 
-//	   							  String offer2 = matcher.group(1);
-//	   							  String offer3 = offer2.replace("%","% Off");
-//	   							  offerValue = offer3;
-//	   						}
+	                          Pattern pattern = Pattern.compile("\\((.*?)\\)");
+	   						Matcher matcher = pattern.matcher(getOffer);      
+	   						
+	   						if(matcher.find()) { 
+	   							  String offer2 = matcher.group(1);
+	   							  String offer3 = offer2.replace("%","% Off");
+	   							  offerValue = offer3;
+	   						}
 	                          System.out.println(offerValue);
 	                    	  }
 	                    	  catch(Exception ex) {
 	                    		  offerValue = "NA";
 	                    	  }
 	                      }    
-	                   }*/
+	                   }
 					
                    		//Screenshots 
                       BlinkitId screenshot = new BlinkitId();
@@ -489,7 +491,7 @@ public class Apollo {
             	// for store the multiple we can use the time to store the multiple files
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
                 String timestamp = dateFormat.format(new Date());
-                String outputFilePath = ".\\Output\\Apollo_Pharama2_OutputData_" + timestamp + ".xlsx";
+                String outputFilePath = ".\\Output\\Apollo_Pharama_OutputData_" + timestamp + ".xlsx";
                 
                 // Write results to Excel file
                 FileOutputStream outFile = new FileOutputStream(outputFilePath);

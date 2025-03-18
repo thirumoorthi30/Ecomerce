@@ -1,4 +1,4 @@
-package Dailyrun;
+package Shopping;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -275,7 +275,57 @@ public class amazonStatesNew {
                     
                     headercount++;
                     
-                    //sp
+                    //mrp
+                    
+                    try {
+                    WebElement mrp = driver.findElement(By.xpath("//*[@id=\"corePrice_desktop\"]/div/table/tbody/tr[1]/td[2]/span[1]/span[2]"));
+                    originalMrp1 = mrp.getText();
+                    mrpValue = originalMrp1.replace("₹", "").replace(",", "");
+                  
+                    System.out.println(mrpValue);
+                    
+                    } 
+                    
+                    catch(NoSuchElementException e){ 
+                    	try {
+                    		
+                    		WebElement mrp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[1]/span[2]/span[2]/span[2]"));
+                            originalMrp2 = mrp.getText();
+                            mrpValue = originalMrp2.replace("₹", "").replace(",", "");
+                           // mrpValue = originalMrp2;                      
+                            System.out.println(mrpValue);
+                        
+                    }
+                    	catch(Exception ex) {
+                    		try {
+                    		WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]"));
+                           // WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]"));
+                    		originalMrp3 = mrp.getText();
+                    		if(originalMrp3.contains("₹")){   //  /html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]
+                    			 mrpValue = originalMrp3.replace("₹", "").replace(",", "");
+                    		}else {
+                    			mrpValue = originalMrp3;
+                    		}   
+                            System.out.println(mrpValue);
+                    		}
+                    		catch(Exception exx) {
+                    			//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[2]/span/span[1]/span[2]/span/span[2]
+                    			try {
+                            		WebElement mrp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[2]/span/span[1]/span[2]/span/span[2]"));
+                            		originalMrp3 = mrp.getText();
+                            		if(originalMrp3.contains("₹")){
+                            			 mrpValue = originalMrp3.replace("₹", "").replace(",", "");
+                            		}else {
+                            			mrpValue = originalMrp3;
+                            		}   
+                                    System.out.println(mrpValue);
+                            		}
+                            		catch(Exception exxR) {
+                            			mrpValue = "NA";
+                            		}
+                    		}
+                    		}
+                    	}
                     
                    try {
                     WebElement sp = driver.findElement(By.xpath("//*[@id=\"corePrice_desktop\"]/div/table/tbody/tr[2]/td[2]/span[1]/span[2]"));
@@ -307,73 +357,11 @@ public class amazonStatesNew {
                     	   }
                     	   
                     		   catch(Exception ex) {
-                    			   try {
-                    				   WebElement sp = driver.findElement(By.xpath("//div[@class='a-section a-spacing-none aok-align-center']//span[@class='a-text-normal']//span[@class='a-price-whole']"));
-                                       originalSp2 = sp.getText();
-                                       spValue =  originalSp2.replace("₹", "").replace(",", "");
-                                       System.out.println(spValue);
-                    			   }
-                    			   catch(Exception exe) {
-                    				   spValue = "NA";
-                    			   }
-                    			  
+                    			   spValue = mrpValue;
                     		   }
                            }
                     	  
                        }
-                   
-                   //mrp
-                   
-                   try {
-                   WebElement mrp = driver.findElement(By.xpath("//*[@id=\"corePrice_desktop\"]/div/table/tbody/tr[1]/td[2]/span[1]/span[2]"));
-                   originalMrp1 = mrp.getText();
-                   mrpValue = originalMrp1.replace("₹", "").replace(",", "");
-                 
-                   System.out.println(mrpValue);
-                   
-                   } 
-                   
-                   catch(NoSuchElementException e){ 
-                   	try {
-                   		
-                   		WebElement mrp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[1]/span[2]/span[2]/span[2]"));
-                           originalMrp2 = mrp.getText();
-                           mrpValue = originalMrp2.replace("₹", "").replace(",", "");
-                          // mrpValue = originalMrp2;                      
-                           System.out.println(mrpValue);
-                       
-                   }
-                   	catch(Exception ex) {
-                   		try {
-                   		WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]"));
-                          // WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]"));
-                   		originalMrp3 = mrp.getText();
-                   		if(originalMrp3.contains("₹")){   //  /html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]
-                   			 mrpValue = originalMrp3.replace("₹", "").replace(",", "");
-                   		}else {
-                   			mrpValue = originalMrp3;
-                   		}   
-                           System.out.println(mrpValue);
-                   		}
-                   		catch(Exception exx) {
-                   			//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[2]/span/span[1]/span[2]/span/span[2]
-                   			try {
-                           		WebElement mrp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[2]/span/span[1]/span[2]/span/span[2]"));
-                           		originalMrp3 = mrp.getText();
-                           		if(originalMrp3.contains("₹")){
-                           			 mrpValue = originalMrp3.replace("₹", "").replace(",", "");
-                           		}else {
-                           			mrpValue = originalMrp3;
-                           		}   
-                                   System.out.println(mrpValue);
-                           		}
-                           		catch(Exception exxR) {
-                           			mrpValue = spValue;
-                           		}
-                   		}
-                   		}
-                   	}
-                   
                    
                  //Out Of Stocks
                    if(url.contains("NA")){

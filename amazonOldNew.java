@@ -1,4 +1,4 @@
-package Dailyrun;
+package Shopping;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -167,11 +167,6 @@ public class amazonOldNew {
                 	  
                     driver.get(url);
                     driver.manage().window().maximize();
-                    
-                    if (i == 0) {
-                        Thread.sleep(10000);
-                    }    
-                    
                     
 					if(i == 0 || i == 1) {
 						WebElement location = driver.findElement(By.id("contextualIngressPtPin"));

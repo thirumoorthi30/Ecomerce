@@ -1,4 +1,4 @@
-package HealthCare;
+package Shopping;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -42,7 +42,7 @@ public class Tata1mg {
             String filePath = ".\\input-data\\Phrma input data.xlsx";
             FileInputStream file = new FileInputStream(filePath);
             Workbook urlsWorkbook = new XSSFWorkbook(file);
-            Sheet urlsSheet = urlsWorkbook.getSheet("Tata1mg1");
+            Sheet urlsSheet = urlsWorkbook.getSheet("Tata1mg2");
             int rowCount = urlsSheet.getPhysicalNumberOfRows();
 
 	            List<String> inputPid = new ArrayList<>(),InputCity = new ArrayList<>(),InputName = new ArrayList<>(),InputSize = new ArrayList<>(),NewProductCode = new ArrayList<>(),
@@ -238,7 +238,7 @@ public class Tata1mg {
                     headercount++;
                     
                     try {
-                        WebElement sp = driver.findElement(By.xpath("//div[@class='OtcPriceBox__price-box___p13HY']//span[@class='PriceBoxPlanOption__offer-price___3v9x8 PriceBoxPlanOption__offer-price-cp___2QPU_'][1]"));
+                        WebElement sp = driver.findElement(By.xpath("//*[@id=\"container\"]/div/div/div[2]/div[4]/div[1]/div/div[2]/div[1]/div[1]/div[2]/span[1]"));
                         originalSp1 = sp.getText();
                         spValue =  originalSp1.replace("₹", "");
                         System.out.println(spValue);
@@ -251,83 +251,77 @@ public class Tata1mg {
                         
                        }
                        catch(Exception e) {
-                    	   spValue = "NA";
-                       }
-                    	   //*[@id="corePriceDisplay_desktop_feature_div"]/div[1]/span[2]/span[2]/span[2]
-//                    	   try {
-//                    	   WebElement sp = driver.findElement(By.xpath("//div[@class='OtcPriceBox__price-box___p13HY']//span[@class='PriceBoxPlanOption__offer-price___3v9x8 PriceBoxPlanOption__offer-price-cp___2QPU_'][1]"));
-//                           originalSp2 = sp.getText();
-//                           spValue =  originalSp2.replace("₹", "");
-//                           System.out.println(spValue);
-//                    	   }
-//                           catch(Exception exx) {
-//                        	   try {
-//                        		   WebElement sp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[1]/span[2]/span[2]/span[2]"));
-//                                   originalSp2 = sp.getText();
-//                                   spValue =  originalSp2.replace("₹", "");
-//                                   System.out.println(spValue);
-//                        	   }
-//                        	   
-//                        		   catch(Exception ex) {
-//                        			   
-//                        		   }
-//                               }
-//                        	  
-//                           }
-//                    
-                    Thread.sleep(2000);
+                    	 //*[@id="corePriceDisplay_desktop_feature_div"]/div[1]/span[2]/span[2]/span[2]
+                    	   try {
+                    	   WebElement sp = driver.findElement(By.xpath("//div[@class='OtcPriceBox__price-box___p13HY']//span[@class='PriceBoxPlanOption__offer-price___3v9x8 PriceBoxPlanOption__offer-price-cp___2QPU_'][1]"));
+                           originalSp2 = sp.getText();
+                           spValue =  originalSp2.replace("₹", "");
+                           System.out.println(spValue);
+                    	   }
+                           catch(Exception exx) {
+                        	   try {
+                        		   WebElement sp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[1]/span[2]/span[2]/span[2]"));
+                                   originalSp2 = sp.getText();
+                                   spValue =  originalSp2.replace("₹", "");
+                                   System.out.println(spValue);
+                        	   }
+                        	   
+                        		   catch(Exception ex) {
+                        			   
+                        		   }
+                               }
+                        	  
+                           }
+                    
                     try {
-                    WebElement mrp = driver.findElement(By.xpath("//div[@class='OtcPriceBox__price-box___p13HY']//span[@class='PriceBoxPlanOption__margin-right-4___2aqFt PriceBoxPlanOption__stike___pDQVN']"));
+                    WebElement mrp = driver.findElement(By.xpath("//*[@id=\"container\"]/div/div/div[2]/div[4]/div[1]/div/div[2]/div[1]/div[1]/div[2]/span[2]"));
                     originalMrp1 = mrp.getText();
                     mrpValue = originalMrp1.replace("₹", "");
                     System.out.println(mrpValue);
                     
                     } 
                     
-                    catch(NoSuchElementException e){
-                    	mrpValue = spValue;
+                    catch(NoSuchElementException e){ 
+                    	try {
+                    		
+                    		WebElement mrp = driver.findElement(By.xpath("//div[@class='OtcPriceBox__price-box___p13HY']//span[@class='PriceBoxPlanOption__margin-right-4___2aqFt PriceBoxPlanOption__stike___pDQVN']	"));
+                            originalMrp2 = mrp.getText();
+                            mrpValue = originalMrp2.replace("₹", "");
+                           // mrpValue = originalMrp2;                      
+                            System.out.println(mrpValue);
+                        
                     }
+                    	catch(Exception ex) {
+                    		try {
+                    		WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]"));
+                           // WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]"));
+                    		originalMrp3 = mrp.getText();
+                    		if(originalMrp3.contains("₹")){   //  /html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]
+                    			 mrpValue = originalMrp3.replace("₹", "");
+                    		}else {
+                    			mrpValue = originalMrp3;
+                    		}   
+                            System.out.println(mrpValue);
+                    		}
+                    		catch(Exception exx) {
+                    			//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[2]/span/span[1]/span[2]/span/span[2]
+                    			try {
+                            		WebElement mrp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[2]/span/span[1]/span[2]/span/span[2]"));
+                            		originalMrp3 = mrp.getText();
+                            		if(originalMrp3.contains("₹")){
+                            			 mrpValue = originalMrp3.replace("₹", "");
+                            		}else {
+                            			mrpValue = originalMrp3;
+                            		}   
+                                    System.out.println(mrpValue);
+                            		}
+                            		catch(Exception exxR) {
+                            			mrpValue = spValue;
+                            		}
+                    		}
+                    		}
+                    	}
                     
-//                    	try {
-//                    		
-//                    		WebElement mrp = driver.findElement(By.xpath("//div[@class='OtcPriceBox__price-box___p13HY']//span[@class='PriceBoxPlanOption__margin-right-4___2aqFt PriceBoxPlanOption__stike___pDQVN']	"));
-//                            originalMrp2 = mrp.getText();
-//                            mrpValue = originalMrp2.replace("₹", "");
-//                           // mrpValue = originalMrp2;                      
-//                            System.out.println(mrpValue);
-//                        
-//                    }
-//                    	catch(Exception ex) {
-//                    		try {
-//                    		WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]"));
-//                           // WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]"));
-//                    		originalMrp3 = mrp.getText();
-//                    		if(originalMrp3.contains("₹")){   //  /html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]
-//                    			 mrpValue = originalMrp3.replace("₹", "");
-//                    		}else {
-//                    			mrpValue = originalMrp3;
-//                    		}   
-//                            System.out.println(mrpValue);
-//                    		}
-//                    		catch(Exception exx) {
-//                    			//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[2]/span/span[1]/span[2]/span/span[2]
-//                    			try {
-//                            		WebElement mrp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[2]/span/span[1]/span[2]/span/span[2]"));
-//                            		originalMrp3 = mrp.getText();
-//                            		if(originalMrp3.contains("₹")){
-//                            			 mrpValue = originalMrp3.replace("₹", "");
-//                            		}else {
-//                            			mrpValue = originalMrp3;
-//                            		}   
-//                                    System.out.println(mrpValue);
-//                            		}
-//                            		catch(Exception exxR) {
-//                            			mrpValue = spValue;
-//                            		}
-//                    		}
-//                    		}
-//                    	}
-//                    
           
                    
                  //Out Of Stocks
@@ -361,43 +355,31 @@ public class Tata1mg {
 	                   else {
 	                   try {
 	                	   WebElement offer = driver.findElement(By.xpath("//*[@id=\"container\"]/div/div/div[2]/div[4]/div[1]/div/div[2]/div[1]/div[1]/div[2]/span[3]"));
-	                       String offer1 = offer.getText();
-	                       String offer2 = offer1.replace("% off", "% Off");
+	                       String originalOffer = offer.getText();
 	                       
-	                    		   offerValue = offer2;
-//	                       Pattern pattern = Pattern.compile("\\((.*?)\\)");
-//	   						Matcher matcher = pattern.matcher(originalOffer);      
-//	   						
-//	   						if(matcher.find()) { 
-//	   							  String offer2 = matcher.group(1);
-//	   							  String offer3 = offer2.replace("%","% Off");
-//	   							  offerValue = offer3;   
-//	   						}
+	                      offerValue = originalOffer;
+	                       
 	                          System.out.println(offerValue);
 	                      
 	                      }
 	                      catch(Exception e) {
-	                    	 // offerValue = "NA";
-	                      }
-	                    	  
-	                    	  
-//	                    	  try {
-//	                    	  WebElement offer = driver.findElement(By.xpath("//div[@class='OtcPriceBox__atc-box___30PES']//div[@class='OtcPriceBox__price-box___p13HY']//span[@class='PriceBoxPlanOption__discount___iN_jm']"));
-//	                          String getOffer = offer.getText();
-//	                          Pattern pattern = Pattern.compile("\\((.*?)\\)");
-//	   						Matcher matcher = pattern.matcher(getOffer);      
-//	   						
-//	   						if(matcher.find()) { 
-//	   							  String offer2 = matcher.group(1);
-//	   							  String offer3 = offer2.replace("%","% Off");
-//	   							  offerValue = offer3;
-//	   						}
-//	                          System.out.println(offerValue);
-//	                    	  }
-//	                    	  catch(Exception ex) {
-//	                    		  offerValue = "NA";
-//	                    	  }
-//	                      }    
+	                    	  try {
+	                    	  WebElement offer = driver.findElement(By.xpath("//*[@id=\"corePrice_desktop\"]/div/table/tbody/tr[3]/td[2]/span[1]"));
+	                          String getOffer = offer.getText();
+	                          Pattern pattern = Pattern.compile("\\((.*?)\\)");
+	   						Matcher matcher = pattern.matcher(getOffer);      
+	   						
+	   						if(matcher.find()) { 
+	   							  String offer2 = matcher.group(1);
+	   							  String offer3 = offer2.replace("%","% Off");
+	   							  offerValue = offer3;
+	   						}
+	                          System.out.println(offerValue);
+	                    	  }
+	                    	  catch(Exception ex) {
+	                    		  offerValue = "NA";
+	                    	  }
+	                      }    
 	                   }
 					
                    		//Screenshots 
@@ -465,8 +447,7 @@ public class Tata1mg {
             	// for store the multiple we can use the time to store the multiple files
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
                 String timestamp = dateFormat.format(new Date());
-                String outputFilePath = ".\\Output\\TAta1mg_FirstHalf_OutputData_" + timestamp + ".xlsx";
-                
+                String outputFilePath = ".\\Output\\TAta1mg_OutputData_" + timestamp + ".xlsx";
                 
                 // Write results to Excel file
                 FileOutputStream outFile = new FileOutputStream(outputFilePath);
