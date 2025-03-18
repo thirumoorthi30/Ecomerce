@@ -1,4 +1,4 @@
-package Shopping;
+package Web8Scrapping;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -24,7 +24,7 @@ import CommonUtility.BlinkitId;
 public class flipkart8web {
 
 	 public static void main(String[] args) throws Exception{
-	        System.setProperty("webdriver.chrome.driver", "./Drivers//chromedriver.exe");
+	        //System.setProperty("webdriver.chrome.driver", "./Drivers//chromedriver.exe");
 	        WebDriver driver = new ChromeDriver();
 
 	        int count = 0;
@@ -38,14 +38,13 @@ public class flipkart8web {
 	          String originalMrp2 = " ";
 	          String originalMrp3 = " ";
 	          String originalSp1 = " ";
-	          String originalSp2 = " ";
 	          String NewAvailability1 = " ";
 	        try {
 	            // Read URLs from Excel file
 	            String filePath = ".\\input-data\\Website 8 Input data.xlsx";
 	            FileInputStream file = new FileInputStream(filePath);
 	            Workbook urlsWorkbook = new XSSFWorkbook(file);
-	            Sheet urlsSheet = urlsWorkbook.getSheet("Flipkart");
+	            Sheet urlsSheet = urlsWorkbook.getSheet("Flipkart");//110015
 	            int rowCount = urlsSheet.getPhysicalNumberOfRows();
 
 		            List<String> inputPid = new ArrayList<>(),InputCity = new ArrayList<>(),InputName = new ArrayList<>(),InputSize = new ArrayList<>(),NewProductCode = new ArrayList<>(),
@@ -199,28 +198,7 @@ public class flipkart8web {
 	                        System.out.println("headercount = " + headercount);
 	                        
 	                        headercount++;
-	                        try {
-	                            WebElement mrp = driver.findElement(By.xpath("//div[@class='yRaY8j A6+E6v']"));
-	                            originalMrp1 = mrp.getText();
-	                            mrpValue = originalMrp1.replace("₹", "");
-	                            System.out.println(mrpValue);
-	                            
-	                            } 
-	                            
-	                            catch(NoSuchElementException e){ 
-	                            		
-	                            	try {
-	                            		WebElement mrp = driver.findElement(By.xpath("/html/body/div[1]/div/div[3]/div[1]/div[2]/div[2]/div/div[3]/div[1]/div/div[2]"));
-	                                    originalMrp2 = mrp.getText();
-	                                    mrpValue = originalMrp2.replace("₹", "");
-	                                   // mrpValue = originalMrp2;                      
-	                                    System.out.println(mrpValue);
-	                            	}
-	                            	catch(Exception t) {
-	                            		mrpValue = "NA";
-	                            	}
-	                                
-	                            }
+	                        
 	                        
 	                        try {
 	                            WebElement sp = driver.findElement(By.xpath("//div[@class='Nx9bqj CxhGGd']"));
@@ -239,6 +217,29 @@ public class flipkart8web {
 	                        		spValue = "NA";
 	                        	 }
 	                        	}
+	                        
+	                        try {
+	                            WebElement mrp = driver.findElement(By.xpath("//div[@class='yRaY8j A6+E6v']"));
+	                            originalMrp1 = mrp.getText();
+	                            mrpValue = originalMrp1.replace("₹", "");
+	                            System.out.println(mrpValue);
+	                            
+	                            } 
+	                            
+	                            catch(NoSuchElementException e){ 
+	                            		
+	                            	try {
+	                            		WebElement mrp = driver.findElement(By.xpath("/html/body/div[1]/div/div[3]/div[1]/div[2]/div[2]/div/div[3]/div[1]/div/div[2]"));
+	                                    originalMrp2 = mrp.getText();
+	                                    mrpValue = originalMrp2.replace("₹", "");
+	                                   // mrpValue = originalMrp2;                      
+	                                    System.out.println(mrpValue);
+	                            	}
+	                            	catch(Exception t) {
+	                            		mrpValue = spValue;
+	                            	}
+	                                
+	                            }
 	                        
 	                        
 	                        //offer
@@ -269,82 +270,90 @@ public class flipkart8web {
 	                          
 	                       
 	                }
-	                        //Out Of Stocks
-	                        
-	                        
-//	                        if(url.contains("NA")){
-//	     						String result = "NA";
-//	     					}	
-//	                        
-//	                        int result;
-//	                        if(spValue.equals(mrpValue)) {
-//	                     	   result = 0;
-//	                     	   
-//	                     	   System.out.println(result);
-//	                     	   
+//	                     // Initial result to track stock status
+//	                        int result = 1; 
+//
+//	                        if (url.contains("NA")) {
+//	                            NewAvailability1 = "NA"; 
+//	                        } else {
+//	                            try {
+//	                                // Consolidated XPath checks
+//	                                String[] xpaths = {
+//	                                    "//div[@class='cPHDOP col-12-12']//div[@class='Z8JjpR']",
+//	                                    "//*[@id=\"container\"]/div/div[3]/div[1]/div[2]/div[3]/div",
+//	                                     "//*[@id=\"container\"]/div/div[3]/div[1]/div[2]/div[2]/div"
+//	                                };
+//	                                
+//	                                boolean isElementPresent = false;
+//
+//	                                // Check for each XPath
+//	                                for (String xpath : xpaths) {
+//	                                    if (!driver.findElements(By.xpath(xpath)).isEmpty()) {
+//	                                        isElementPresent = true;
+//	                                        break; 
+//	                                    }
+//	                                }
+//
+//	                                // Determine the result based on presence of the element
+//	                                result = isElementPresent ? 0 : 1;
+//	                                System.out.println(result);
+//	                            } catch (Exception e) {
+//	                                System.out.println("Error checking availability: " + e.getMessage());
+//	                                result = -1;
+//	                            }
 //	                        }
-//	                        
-//	                        else {
-//	     					
-//	                     	    result = 1;
-//	     					try {
-//	     						
-//	     						String xpathForFlipkart1 = "//*[@id=\"container\"]/div/div[3]/div[1]/div[2]/div[4]/div/div/div[2]/div";
 //
-//	    						
-//	    						String xpathForFlipkart2 = "/html/body/div[1]/div/div[3]/div[1]/div[2]/div[4]/div/div/div[2]/div";
-//	    						
-//	    						boolean isElementPresent = !driver.findElements(By.xpath(xpathForFlipkart1)).isEmpty();
-//
-//	    				        if (!isElementPresent) {
-//	    				            isElementPresent = !driver.findElements(By.xpath(xpathForFlipkart2)).isEmpty();
-//	    				        }
-//
-//	    				        result = isElementPresent ? 0 : 1;
-//	    				        
-//	    				        System.out.println(result);
-//	     						
-//	     					/*String xpathForFlipkart = "//*[@id=\"container\"]/div/div[3]/div[1]/div[2]/div[4]/div/div/div[2]/div";
-//
-//	     					
-//	     					boolean isElementPresent = !driver.findElements(By.xpath(xpathForFlipkart)).isEmpty();
-//
-//	     			        result = isElementPresent ? 1 : 0;
-//	     			        
-//	     			        System.out.println(result);*/
-//	     					}
-//	     					catch(Exception e) {
-//	     						System.out.println(e.getMessage());
-//	     					}
-//	     					
-//	     					
-//	                        }
-//	     					//int stock = result;
-//	     					NewAvailability1 = String.valueOf(result);
-//
+//	                        // Assign final availability status
+//	                        NewAvailability1 = String.valueOf(result);
 	                        
-	                        //out of stock
-	                        
-	                        int result;
-	                        WebElement available=driver.findElement(By.xpath("//*[@id=\"container\"]/div/div[3]/div[1]/div[1]/div[2]/div/ul/li[1]/button"));
-	                        if(available.isEnabled()) {
-	                        	result=1;
+	                     // Initial result to track stock status
+	                        int result = 1;
+
+	                        if (url.contains("NA")) {
+	                            NewAvailability1 = "NA";
+	                        } else {
+	                            try {
+	                                // Define the texts to check for
+	                                String[] textsToCheck = {
+	                                    "Currently Unavailable", 
+	                                    "Currently out of stock in this area.",
+	                                    "Sold Out"  
+	                                };
+
+	                                // Get the page source
+	                                String pageSource = driver.getPageSource();
+	                                
+	                                boolean isTextPresent = false;
+
+	                                // Check for the presence of any of the texts
+	                                for (String text : textsToCheck) {
+	                                    if (pageSource.contains(text)) {
+	                                        isTextPresent = true;
+	                                        break; 
+	                                    }
+	                                }
+
+	                                // Determine the result based on the presence of the text
+	                                result = isTextPresent ? 0 : 1;
+	                                System.out.println(result);
+	                            } catch (Exception e) {
+	                                System.out.println("Error checking availability: " + e.getMessage());
+	                                result = -1;
+	                            }
 	                        }
-	                        else {
-	                        	result=0;
-	                        }
-	                        System.out.println(result);
-	                        
+
+	                        // Assign final availability status
 	                        NewAvailability1 = String.valueOf(result);
-	                        
-	                    	//Screenshots 
+
+
+	               /*     	//Screenshots 
 	                        BlinkitId screenshot = new BlinkitId();
 	  	                   try {
 	  	       				screenshot.screenshot(driver, "Flipkart", id);
 	  	       			} catch (Exception e) {
 	  	       				e.fillInStackTrace();
 	  	       			
-	  	       			}
+	  	       			}   */
 	                     
 	                      Row resultRow = resultsSheet.createRow(rowIndex++);
 	                      
@@ -402,7 +411,7 @@ public class flipkart8web {
 	              	// for store the multiple we can use the time to store the multiple files
 	                  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
 	                  String timestamp = dateFormat.format(new Date());
-	                  String outputFilePath = ".\\Output\\Flipkart8Web" + timestamp + ".xlsx";
+	                  String outputFilePath = ".\\Output\\Flipkart_output" + timestamp + ".xlsx";
 	                  
 	                  // Write results to Excel file
 	                  FileOutputStream outFile = new FileOutputStream(outputFilePath);

@@ -1,4 +1,4 @@
-package Shopping;
+package Web8Scrapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +21,15 @@ public class Myntra2 {
 		
 		int ExceptionCount = 0;
 		
-		UserUtility userUtility = new UserUtility(UserUtility.InputDataFilePath2,"Input data", "Locators");		
+		UserUtility userUtility = new UserUtility(UserUtility.InputDataFilePath2,"Sheet2", "Locators");		
 		while (rowNum < userUtility.getNoOfRows(userUtility.InputDataSheet)) {
 			try {
 				ProductDetailsScrapping2 pds = new ProductDetailsScrapping2();
 				driver = userUtility.launchBrowser(driver, false, false, false);
+				
+				
+			//	Thread.sleep(5000);
+				
 				for (int i = 1; i < userUtility.getNoOfRows(userUtility.InputDataSheet); i++) {
 					//driver.manage().deleteAllCookies();
 					Row row = userUtility.InputDataSheet.getRow(rowNum);
@@ -165,11 +169,13 @@ public class Myntra2 {
 						
 						String xpathForNykaa = "//span[@class='css-1neql7s']";
 						
-						boolean isElementPresent = !driver.findElements(By.xpath(xpathForMyntra)).isEmpty();
+						boolean isElementPresent = !driver.findElements(By.xpath(xpathForMyntra)).isEmpty();   //is empty = true
 
 				        if (!isElementPresent) {
 				            isElementPresent = !driver.findElements(By.xpath(xpathForNykaa)).isEmpty();
 				        }
+				        
+				        //true =0,false =1 
 
 				        result = isElementPresent ? 0 : 1;
 				        

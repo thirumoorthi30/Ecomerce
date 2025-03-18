@@ -1,4 +1,4 @@
-package Shopping;
+package Web8Scrapping;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,7 +22,7 @@ import CommonUtility.BlinkitId;
 public class swiggy8Web {
 
 	public static void main(String[] args) throws Exception{
-        System.setProperty("webdriver.chrome.driver", "./Drivers//chromedriver.exe");
+       // System.setProperty("webdriver.chrome.driver", "./Drivers//chromedriver.exe");
         WebDriver driver = new ChromeDriver();
 
         int count = 0;
@@ -37,6 +37,8 @@ public class swiggy8Web {
           String originalMrp3 = " ";
           String originalSp1 = " ";
           String originalSp2 = " ";
+          String NewAvailability1 = " ";
+          String webUom = " ";
         try {
             // Read URLs from Excel file
             String filePath = ".\\input-data\\Website 8 Input data.xlsx";
@@ -273,16 +275,25 @@ public class swiggy8Web {
                     
                     try {
                     	
-                    WebElement nameElement = driver.findElement(By.xpath("//*[@id=\"product-details-page-container\"]/div/div[2]/div[1]/div[3]/div[1]/div[2]"));
+                    WebElement nameElement = driver.findElement(By.xpath("//div[@data-testid='item-name']"));
                     newName = nameElement.getText();
                     System.out.println(newName);
                     }
                     
                     catch(NoSuchElementException e) {
+                    	e.printStackTrace();
+                    	/*try {
+                    		WebElement nameElement = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[2]/div[1]/div[2]/div[2]/div[2]"));
+                        	newName = nameElement.getText();
+                            System.out.println(newName);
+                    	}
+                    	catch (Exception t) {
+                    		WebElement nameElement = driver.findElement(By.xpath("(/html/body/div[1]/div/div/div/div[2]/div[1]/div[2]/div[2]/div)[2]"));
+                        	newName = nameElement.getText();
+                            System.out.println(newName);
+						}*/
                     	
-                    	WebElement nameElement = driver.findElement(By.xpath("//*[@id=\"product-details-page-container\"]/div/div[2]/div[1]/div[2]/div[1]/div[2]"));
-                    	newName = nameElement.getText();
-                        System.out.println(newName);
+                    	
                     	
                     }
                     System.out.println("headercount = " + headercount);
@@ -290,17 +301,9 @@ public class swiggy8Web {
                     headercount++;
                     
                     
-                    // Mrp 
-                    try {
-                    WebElement mrp = driver.findElement(By.xpath("//*[@id=\"product-details-page-container\"]/div/div[2]/div[1]/div[3]/div[2]/div[1]/div[2]/div[2]"));
-                    originalMrp1 = mrp.getText();
-                    mrpValue = originalMrp1.replace("₹", "");
-                    System.out.println(mrpValue);
-                    
-                    }
-                    
-                    catch(NoSuchElementException e){ 
-                    	try {
+                   
+                  
+                    /*	try {
                     		
                     		WebElement mrp = driver.findElement(By.xpath("//*[@id=\"product-details-page-container\"]/div/div[2]/div[1]/div[2]/div[2]/div[1]/div[2]/div"));
                             originalMrp2 = mrp.getText();
@@ -312,53 +315,96 @@ public class swiggy8Web {
                     	catch(Exception ex) {
                     		try {
                     		WebElement mrp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[1]/span[2]/span[2]/span[2]"));
-                           // WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[7]/div[3]/div[4]/div[12]/div/div/div[4]/div[2]/span/span[1]/span[2]/span/span[2]"));
+                           // WebElement mrp = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[2]/div[1]/div[2]/div[3]/div[1]/div[2]/div[2]"));
                             originalMrp3 = mrp.getText();
                             mrpValue = originalMrp3.replace("₹", "");                      
                             System.out.println(mrpValue);
                     		}
                     		catch(Exception exx) {
-                    			mrpValue = "NA";
+                    			try {
+                    				//WebElement mrp = driver.findElement(By.xpath("//*[@id=\"corePriceDisplay_desktop_feature_div\"]/div[1]/span[2]/span[2]/span[2]"));
+                                     WebElement mrp = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[2]/div[1]/div[2]/div[3]/div[1]/div[2]/div[2]"));
+                                     originalMrp3 = mrp.getText();
+                                     mrpValue = originalMrp3.replace("₹", "");                      
+                                     System.out.println(mrpValue);
+                    			}catch (Exception p) {
+                    				mrpValue = "NA";
+								}
+                    			
                     		}
-                    		}
-                    	}
+                    		}*/
+                    
                     
                    try {
-                    WebElement sp = driver.findElement(By.xpath("//*[@id=\"product-details-page-container\"]/div/div[2]/div[1]/div[3]/div[2]/div[1]/div[2]/div[1]"));
+                    WebElement sp = driver.findElement(By.xpath("//div[@data-testid='item-price']"));
                     originalSp1 = sp.getText();
                     spValue =  originalSp1.replace("₹", "");
                     System.out.println(spValue);
                    }
                    catch(Exception e) {
                 	   
-                	   try {
+                	/*   try {
                 	   WebElement sp = driver.findElement(By.xpath("//*[@id=\"__next\"]/div/div/div[2]/div[2]/div[1]/div[1]/div[2]/div[4]/div[1]/h4"));
                        originalSp2 = sp.getText();
                        spValue =  originalSp2.replace("₹", "");
                        System.out.println(spValue);
                 	   }
                        catch(Exception exx) {
-                    	   spValue = "NA";
-                    	   
-                    	   if(spValue == "NA") {
-                    		   spValue = mrpValue;
+                    	   try {
+                    		   
+                    		   WebElement sp = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[2]/div[1]/div[2]/div[3]/div[1]/div[2]/div[1]"));
+                               originalSp2 = sp.getText();
+                               spValue =  originalSp2.replace("₹", "");
+                               System.out.println(spValue);
+                    	   }
+                    	   catch (Exception h) {
+                    		   spValue = "NA";
+                        	   
+                        	   if(spValue == "NA") {
+                        		   spValue = mrpValue;
+						}
+                    	  
             		   }
-                       }
+                       }*/
                    }
                    
-                   // offer
+                   // Mrp 
                    try {
+                       WebElement mrp = driver.findElement(By.xpath("//div[@data-testid='item-striked-price']"));
+                       originalMrp1 = mrp.getText();
+                       mrpValue = originalMrp1.replace("₹", "");
+                       System.out.println(mrpValue);
+                       
+                       }
+                       
+                       catch(NoSuchElementException e){ 
+                    	   try {
+                               WebElement mrp = driver.findElement(By.xpath("/html/body/div[1]/div/div/div/div[2]/div[1]/div[2]/div[3]/div[1]/div[2]/div[2]/text()"));
+                               originalMrp1 = mrp.getText();
+                               mrpValue = originalMrp1.replace("₹", "");
+                               System.out.println(mrpValue);
+                               
+                               }
+                    	   catch (Exception S) {
+							S.printStackTrace();
+						}
+                               
+                   	}
+                    
+                 
+                   // offer
+       /*            try {
                        WebElement offer = driver.findElement(By.xpath("//*[@id=\"product-details-page-container\"]/div/div[2]/div[1]/div[1]/div"));
                        offerValue = offer.getText();
                        
-                      /* Pattern pattern = Pattern.compile("\\((.*?)\\)");
+                       Pattern pattern = Pattern.compile("\\((.*?)\\)");
                        Matcher matcher = pattern.matcher(offer1);
                        
 						if(matcher.find()) { 
 							  String offer2 = matcher.group(1);
 							  offerValue = offer2.replace("%","% Off");
 						  }
-                       //offerValue = offer.getText();  */
+                       //offerValue = offer.getText();  
                        System.out.println(offerValue);
                       }
                       catch(Exception e) {
@@ -371,17 +417,82 @@ public class swiggy8Web {
                     	  catch(Exception ex){
                     		  offerValue = "NA";
                     	  }
-                      }    
+                      }    */
+                   
+//                   int result;
+//                   WebElement available=driver.findElement(By.xpath("//div[text()='Sold Out']"));
+//                   
+//                   if(available.isDisplayed()) {
+//                	   result=0;
+//                   }
+//                   else {
+//                	   result=1;
+//                   }
+//                   NewAvailability1 = String.valueOf(result);
+                   
+                 
+                 //uom  
+                   try {
+                	   
+                	   WebElement webUom1 = driver.findElement(By.xpath("//div[@class='sc-gEvEer ymEfJ _1TwvP']"));
+                	   String webUom2 = webUom1.getText();
+                	   webUom = webUom2;
+                	   System.out.println(webUom);
+                   }
+                   
+                   catch (Exception u) {
+					u.printStackTrace();
+				}
                    
                    
-                   		//Screenshots 
+                   int result=1;
+                   if (url.contains("NA")) {
+                	   NewAvailability1 = "NA";
+                	   } 
+                   else {
+                	 
+                	   try {
+                	   // Define the texts to check for
+                		   String[] textsToCheck = {
+                				   "Currently Unavailable",
+                				   "Currently out of stock in this area.",
+                				   "Sold Out"
+                				   };
+
+                	   // Get the page source
+                	   String pageSource = driver.getPageSource();
+                	   boolean isTextPresent = false;
+
+                	   // Check for the presence of any of the texts
+                	   for (String text : textsToCheck) {
+                	   if (pageSource.contains(text)) {
+                	   isTextPresent = true;
+                	   break;
+                	   }
+                	   }
+
+                	   // Determine the result based on the presence of the text
+                	   result = isTextPresent ? 0 : 1;
+                	   System.out.println(result);
+                	   } catch (Exception e) {
+                	   System.out.println("Error checking availability: " + e.getMessage());
+                	   result = -1;
+                	   }
+                	   }
+
+                	   // Assign final availability status
+                	   NewAvailability1 = String.valueOf(result);
+                	   
+                	   
+                	   
+            /*       		//Screenshots 
                       BlinkitId screenshot = new BlinkitId();
 	                   try {
 	       				screenshot.screenshot(driver, "Swiggy", id);
 	       			} catch (Exception e) {
 	       				e.fillInStackTrace();
 	       			
-	       			}
+	       			}   */
                    
                     Row resultRow = resultsSheet.createRow(rowIndex++);
                     
@@ -394,9 +505,9 @@ public class swiggy8Web {
                     resultRow.createCell(6).setCellValue(newName);
                     resultRow.createCell(7).setCellValue(mrpValue);
                     resultRow.createCell(8).setCellValue(spValue);
-                    resultRow.createCell(9).setCellValue(uom);
+                    resultRow.createCell(9).setCellValue(webUom);
                     resultRow.createCell(10).setCellValue(mulitiplier);
-                    resultRow.createCell(11).setCellValue(availability);
+                    resultRow.createCell(11).setCellValue(NewAvailability1);
                     resultRow.createCell(12).setCellValue(" ");
                     resultRow.createCell(13).setCellValue(" ");
                     resultRow.createCell(14).setCellValue(" ");
@@ -419,9 +530,9 @@ public class swiggy8Web {
                     resultRow.createCell(6).setCellValue("NA");
                     resultRow.createCell(7).setCellValue("NA");
                     resultRow.createCell(8).setCellValue("NA");
-                    resultRow.createCell(9).setCellValue(uom);
+                    resultRow.createCell(9).setCellValue(webUom);
                     resultRow.createCell(10).setCellValue(mulitiplier);
-                    resultRow.createCell(11).setCellValue(availability);
+                    resultRow.createCell(11).setCellValue(NewAvailability1);
                     resultRow.createCell(12).setCellValue(" ");
                     resultRow.createCell(13).setCellValue(" ");
                     resultRow.createCell(14).setCellValue(" ");

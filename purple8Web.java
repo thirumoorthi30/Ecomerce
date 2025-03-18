@@ -1,4 +1,4 @@
-package Shopping;
+package Web8Scrapping;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -14,6 +14,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -43,7 +44,7 @@ public class purple8Web {
 	        try {
 	            // Read URLs from Excel file
 	            String filePath = ".\\input-data\\Website 8 Input data.xlsx";
-	            FileInputStream file = new FileInputStream(filePath);
+	            FileInputStream file = new FileInputStream(filePath);//110015
 	            Workbook urlsWorkbook = new XSSFWorkbook(file);
 	            Sheet urlsSheet = urlsWorkbook.getSheet("Purpelle");
 	            int rowCount = urlsSheet.getPhysicalNumberOfRows();
@@ -182,6 +183,9 @@ public class purple8Web {
 	                    driver.get(url);
 	                    driver.manage().window().maximize();
 	                    Thread.sleep(5000);
+	                    
+                        driver.findElement(By.tagName("body")).sendKeys(Keys.ESCAPE);
+
 	                    try {
 	                    	Thread.sleep(2000);
 	                        WebElement nameElement = driver.findElement(By.xpath("//h6[@class='mb-3 fw-semibold lh-base']"));
@@ -198,43 +202,9 @@ public class purple8Web {
 	                        }
 	                        System.out.println("headercount = " + headercount);
 	                        
-	                        headercount++;
-	                        Thread.sleep(2000);
+
 	                        try {
-	                            WebElement mrp = driver.findElement(By.xpath("//*[@id=\"body\"]/app-root/div/div/div/app-product/div[3]/pds-card/pds-card-body/div/div[2]/div/div[1]/p[2]/del"));
-	                            originalMrp1 = mrp.getText();
-	                            mrpValue = originalMrp1.replace("₹", "");
-	                            System.out.println(mrpValue);
-	                            
-	                            } 
-	                            
-	                            catch(NoSuchElementException e){ 
-	                            		
-	                            	try {
-	                            		WebElement mrp = driver.findElement(By.xpath("//del[@class='actual-price ng-star-inserted']"));
-	    	                            originalMrp1 = mrp.getText();
-	    	                            mrpValue = originalMrp1.replace("₹", "");
-	    	                            System.out.println(mrpValue);
-	                            	}
-	                            	catch(Exception h) {
-	                            		try {
-	                            			WebElement mrp = driver.findElement(By.xpath("/html/body/app-root/div/div/div/app-product/div[2]/pds-card/pds-card-body/div/div[2]/div/div[1]/p[2]/del"));
-		                                    originalMrp2 = mrp.getText();
-		                                    mrpValue = originalMrp2.replace("₹", "");
-		                                   // mrpValue = originalMrp2;                      
-		                                    System.out.println(mrpValue);
-	                            		}
-	                            		catch(Exception d) {
-	                            		mrpValue = "NA";
-	                            		}
-	                            	}
-	                            }
-	                        Thread.sleep(2000);
-	                        
-	                        
-	                        
-	                        try {
-	                            WebElement sp = driver.findElement(By.xpath("//*[@id=\"body\"]/app-root/div/div/div/app-product/div[3]/pds-card/pds-card-body/div/div[2]/div/div[1]/p[2]/strong"));
+	                            WebElement sp = driver.findElement(By.xpath("(//div[@class='detail-box py-2 pb-lg-3 pt-lg-0 ng-star-inserted']//p)[2]//strong"));
 	                            originalSp1 = sp.getText();
 	                            spValue =  originalSp1.replace("₹", "");
 	                            System.out.println(spValue);
@@ -248,7 +218,7 @@ public class purple8Web {
 	                        	}
 	                        	catch(Exception l) {
 	                        		try {
-	                        			 WebElement sp = driver.findElement(By.xpath("/html/body/app-root/div/div/div/app-product/div[2]/pds-card/pds-card-body/div/div[2]/div/div[1]/p[2]/strong"));
+	                        			 WebElement sp = driver.findElement(By.xpath("//*[@id=\"body\"]/app-root/div/div/div/app-product/div[2]/pds-card/pds-card-body/div/div[2]/div/div[1]/p[2]/strong"));
 	 		                            originalSp1 = sp.getText();
 	 		                            spValue =  originalSp1.replace("₹", "");
 	 		                            System.out.println(spValue);
@@ -258,11 +228,33 @@ public class purple8Web {
 	                        		}
 	                        	}
 	                        }
+	                      
 	                        
-	                        
-	                        
-	                        
-	                        
+	                        headercount++;
+	                        Thread.sleep(2000);
+	                        try {
+	                            WebElement mrp = driver.findElement(By.xpath("(//div[@class='detail-box py-2 pb-lg-3 pt-lg-0 ng-star-inserted']//p)[2]//del"));
+	                            originalMrp1 = mrp.getText();
+	                            mrpValue = originalMrp1.replace("₹", "");
+	                            System.out.println(mrpValue);
+	                            
+	                            } 
+	                            
+	                            catch(NoSuchElementException e){ 
+	                            		
+	                            	try {
+	                            		WebElement mrp = driver.findElement(By.xpath("//*[@id=\"body\"]/app-root/div/div/div/app-product/div[2]/pds-card/pds-card-body/div/div[2]/div/div[1]/p[2]/del"));
+	    	                            originalMrp1 = mrp.getText();
+	    	                            mrpValue = originalMrp1.replace("₹", "");
+	    	                            System.out.println(mrpValue);
+	                            	}
+	                            	catch(Exception h) {
+	                            		mrpValue=spValue;
+	                          			 System.out.println(mrpValue);
+	           	                        
+	                            	}
+	                            }
+	                        Thread.sleep(2000);
 	                        
 	                        
 	                        
@@ -300,63 +292,90 @@ public class purple8Web {
 	                        //Out Of Stocks
 	                        
 	                        
-	                        if(url.contains("NA")){
-	     						String result = "NA";
-	     					}	
-	                        
-	                        int result;
-	                        if(spValue.equals(mrpValue)) {
-	                     	   result = 0;
-	                     	   
-	                     	   System.out.println(result);
-	                     	   
+//	                        if(url.contains("NA")){
+//	     						String result = "NA";
+//	     					}	
+//	                        
+//	                        int result;
+//	                        if(spValue.equals(mrpValue)) {
+//	                     	   result = 0;
+//	                     	   
+//	                     	   System.out.println(result);
+//	                     	   
+//	                        }
+//	                        
+//	                        else {
+//	                        	// Out of Stock check
+//	    						
+//	    						
+//	    						 result = 1;
+//	    						try {
+//	    						String xpathForPurplle1 = "/html/body/app-root/div/div/div/app-product/div[3]/pds-card/pds-card-body/div/div[2]/div/div[4]/div/div/button[1]";
+//
+//	    						
+//	    						String xpathForPurplle2 = "//*[@id=\"body\"]/app-root/div/div/div/app-product/div[3]/pds-card/pds-card-body/div/div[2]/div/div[5]/div/div/button[1]";
+//	    						
+//	    						boolean isElementPresent = !driver.findElements(By.xpath(xpathForPurplle1)).isEmpty();   //is empty = true
+//
+//	    				        if (!isElementPresent) {
+//	    				            isElementPresent = !driver.findElements(By.xpath(xpathForPurplle2)).isEmpty();
+//	    				        }
+//	    				        
+//	    				        //true =0,false =1 
+//
+//	    				        result = isElementPresent ? 0 : 1;
+//	    				        
+//	    				        System.out.println(result);
+//	    						}
+//	    						catch(Exception e) {
+//	    							System.out.println(e.getMessage());
+//	    						}
+//	    						
+//	    						//int stock = result;
+//	    						//String NewAvailability1 = String.valueOf(result);
+//	    						
+//	                        }
+//	     					//int stock = result;
+//	     					NewAvailability1 = String.valueOf(result);
+//
+	                        if (url.contains("NA")) {
+	                            String result = "NA";
+	                        } else {
+	                            int result;
+	                            try {
+	                                
+	                                String pageSource = driver.getPageSource();
+
+	                                
+	                                if (pageSource.contains("Add to Cart")) {
+	                                    result = 1; 
+	                                } else {
+	                                    result = 0;
+	                                }
+
+	                                
+	                                NewAvailability1 = String.valueOf(result);
+	                                System.out.println(result);
+
+	                            } catch (Exception e) {
+	                               
+	                                result = 0;
+	                                NewAvailability1 = String.valueOf(result);
+	                                System.out.println(result);
+	                            }
 	                        }
-	                        
-	                        else {
-	                        	// Out of Stock check
-	    						
-	    						
-	    						 result = 1;
-	    						try {
-	    						String xpathForPurplle1 = "/html/body/app-root/div/div/div/app-product/div[2]/pds-card/pds-card-body/div/div[2]/div/div[4]/div/div/button[1]";
 
-	    						
-	    						String xpathForPurplle2 = "/html/body/app-root/div/div/div/app-product/div[3]/pds-card/pds-card-body/div/div[2]/div/div[3]/div/div/button[1]";
-	    						
-	    						boolean isElementPresent = !driver.findElements(By.xpath(xpathForPurplle1)).isEmpty();   //is empty = true
-
-	    				        if (!isElementPresent) {
-	    				            isElementPresent = !driver.findElements(By.xpath(xpathForPurplle2)).isEmpty();
-	    				        }
-	    				        
-	    				        //true =0,false =1 
-
-	    				        result = isElementPresent ? 0 : 1;
-	    				        
-	    				        System.out.println(result);
-	    						}
-	    						catch(Exception e) {
-	    							System.out.println(e.getMessage());
-	    						}
-	    						
-	    						//int stock = result;
-	    						//String NewAvailability1 = String.valueOf(result);
-	    						
-	                        }
-	     					//int stock = result;
-	     					NewAvailability1 = String.valueOf(result);
-
-	     					
+	                  
 	     					
 	     					
 	                    	//Screenshots 
-	                        BlinkitId screenshot = new BlinkitId();
+	          /*              BlinkitId screenshot = new BlinkitId();
 	  	                   try {
 	  	       				screenshot.screenshot(driver, "Purpelle", id);
 	  	       			} catch (Exception e) {
 	  	       				e.fillInStackTrace();
 	  	       			
-	  	       			}
+	  	       			}     */
 	  	                   
 	  	                 
 	                     

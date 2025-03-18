@@ -1,5 +1,5 @@
-package Shopping;
-
+package Web8Scrapping;
+	
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -18,14 +18,19 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
 
 import CommonUtility.BlinkitId;
 
 public class nykaa8Web {
+	
 
 	 public static void main(String[] args) throws Exception{
-	        System.setProperty("webdriver.chrome.driver", "./Drivers//chromedriver.exe");
-	        WebDriver driver = new ChromeDriver();
+		 	ChromeOptions options = new ChromeOptions();
+		 	options.addArguments("--incognito");
+	      //  System.setProperty("webdriver.chrome.driver", "./Drivers//chromedriver.exe");
+	        WebDriver driver = new EdgeDriver();
 
 	        int count = 0;
 	        // int finalSp;
@@ -35,14 +40,15 @@ public class nykaa8Web {
 	          String newName = null;
 	          String mrpValue = null;
 	          String originalMrp1 = " ";
-	          String originalMrp2 = " ";
+	          String originalMrp2 = " ";	
 	          String originalMrp3 = " ";
 	          String originalSp1 = " ";
 	          String originalSp2 = " ";
 	          String NewAvailability1 = " ";
+	          String Sizeuom = " ";
 	        try {
 	            // Read URLs from Excel file
-	            String filePath = ".\\input-data\\Website 8 Input data1.xlsx";
+	            String filePath = ".\\input-data\\Website 8 Input data.xlsx";
 	            FileInputStream file = new FileInputStream(filePath);
 	            Workbook urlsWorkbook = new XSSFWorkbook(file);
 	            Sheet urlsSheet = urlsWorkbook.getSheet("Nykaa");
@@ -178,11 +184,15 @@ public class nykaa8Web {
 	                      }
 	                	  
 	                	  System.out.println("=============="+locationSet+"==============");
-	                	  driver.manage().deleteAllCookies();
+//	                	  ChromeOptions options = new ChromeOptions();
+//	          		 	options.addArguments("--incognito");
+//	          	        System.setProperty("webdriver.chrome.driver", "./Drivers//chromedriver.exe");
+//	          	         driver = new ChromeDriver(options);
+	                	 // driver.manage().deleteAllCookies();
 	                    driver.get(url);
-	                    driver.manage().deleteAllCookies();
+	                  //  driver.manage().deleteAllCookies();
 	                    driver.manage().window().maximize();
-	                    Thread.sleep(5000);
+	                 //   Thread.sleep(5000);
 	                    try {
 	                    	
 	                        WebElement nameElement = driver.findElement(By.xpath("//h1[@class='css-1gc4x7i']"));
@@ -280,15 +290,41 @@ public class nykaa8Web {
 	                        
 	     					//int stock = result;
 	     					NewAvailability1 = String.valueOf(result);
+	     					
+	     					//uom
+	     					
+	     					try {
+	     						WebElement sizeget  = driver.findElement(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[1]/div[2]/div/div[1]/h1/span"));
+		 	
+	     						String Sizeuom1 = sizeget.getText();
+	     						
+	     						Sizeuom = Sizeuom1.replace("(", "").replace(")", "");
+	     						
+	     						
+	     						System.out.println(Sizeuom);
+	     						
+	     						//String originalOffer = offer.getText();
+		 	                	//  offerValue = offer.getText();
+	     						//*[@id="app"]/div[1]/div[2]/div[1]/div[2]/div/div[1]/h1/span
+	     						
+	     						
+	     						
+	     					}
+	     					catch(Exception e) {
+	     						
+	     						Sizeuom = "NA";
+	     					}
+	     					
+	     					
 
-	                    	//Screenshots 
-	                        BlinkitId screenshot = new BlinkitId();
-	  	                   try {
-	  	       				screenshot.screenshot(driver, "Nykaa", id);
-	  	       			} catch (Exception e) {
-	  	       				e.fillInStackTrace();
-	  	       			
-	  	       			}
+//	                    	//Screenshots 
+//	                        BlinkitId screenshot = new BlinkitId();
+//	  	                   try {
+//	  	       				screenshot.screenshot(driver, "Nykaa", id);
+//	  	       			} catch (Exception e) {
+//	  	       				e.fillInStackTrace();
+//	  	       			
+//	  	       			}
 	                     
 	  	                 driver.manage().deleteAllCookies();
 	  	                 
@@ -303,7 +339,7 @@ public class nykaa8Web {
 	                      resultRow.createCell(6).setCellValue(newName);
 	                      resultRow.createCell(7).setCellValue(mrpValue);
 	                      resultRow.createCell(8).setCellValue(spValue);
-	                      resultRow.createCell(9).setCellValue(uom);
+	                      resultRow.createCell(9).setCellValue(Sizeuom);
 	                      resultRow.createCell(10).setCellValue(mulitiplier);
 	                      resultRow.createCell(11).setCellValue(NewAvailability1);
 	                      resultRow.createCell(12).setCellValue(offerValue);
@@ -316,6 +352,10 @@ public class nykaa8Web {
 	                     
 	                      
 	                      System.out.println("Data extracted for URL: " + url);
+	                      
+	                      driver.manage().deleteAllCookies();
+	                   //   driver.quit();
+	                      
 	                  } catch (Exception e) {
 	                      e.printStackTrace();
 	                      
@@ -342,13 +382,17 @@ public class nykaa8Web {
 
 	                      System.out.println("Failed to extract data for URL: " + url);
 	                      
+	                      driver.manage().deleteAllCookies();
+	                     // driver.quit();
+	                      
+	                      
 	                  }
 	              }
 	              try {
 	              	// for store the multiple we can use the time to store the multiple files
 	                  SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
 	                  String timestamp = dateFormat.format(new Date());
-	                  String outputFilePath = ".\\Output\\Nykaa8Web" + timestamp + ".xlsx";
+	                  String outputFilePath = ".\\Output\\Nykaa8Web_Output" + timestamp + ".xlsx";
 	                  
 	                  // Write results to Excel file
 	                  FileOutputStream outFile = new FileOutputStream(outputFilePath);

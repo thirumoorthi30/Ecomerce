@@ -1,4 +1,4 @@
-package Shopping;
+package Web8Scrapping;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -218,17 +218,24 @@ public class Myntra8Web {
 	                            } 
 	                            
 	                            catch(NoSuchElementException e){ 
-	                            		
+	                            		try {
 	                            		WebElement mrp = driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/main/div[2]/div[2]/div[1]/div/p[1]/span[2]/s/text()[2]"));
 	                                    originalMrp2 = mrp.getText();
 	                                    mrpValue = originalMrp2.replace("₹", "");
 	                                   // mrpValue = originalMrp2;                      
 	                                    System.out.println(mrpValue);
+	                            		}
+	                            		catch (Exception q) {        //span[@class='pdp-price']//strong
+	                            			WebElement mrp = driver.findElement(By.xpath("//span[@class='pdp-price']//strong"));
+	        	                            originalMrp1 = mrp.getText();
+	        	                            mrpValue = originalMrp1.replace("₹", "");
+	        	                            System.out.println(mrpValue);
+										}
 	                                
 	                            }
 	                        Thread.sleep(2000);	
 	                        try {
-	                            WebElement sp = driver.findElement(By.xpath("//span[@class='pdp-price']"));
+	                            WebElement sp = driver.findElement(By.xpath(" //span[@class='pdp-price']//strong"));
 	                            originalSp1 = sp.getText();
 	                            spValue =  originalSp1.replace("₹", "");
 	                            System.out.println(spValue);
@@ -247,14 +254,19 @@ public class Myntra8Web {
 	 	                   try {
 	 	                	   WebElement offer = driver.findElement(By.xpath("//span[@class='pdp-discount']"));
 	 	                       String originalOffer = offer.getText();
-	 	                       offerValue = originalOffer.replace("-","").replace("%","% Off");
+	 	                       offerValue = originalOffer.replace("-","").replace("% OFF","% Off");
 	 	                       
 	 	                          System.out.println(offerValue);
 	 	                      
 	 	                      }catch (Exception e) {
+	 	                    	  try {
 	 	                    	 WebElement offer = driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/main/div[2]/div[2]/div[1]/div/p[1]/span[3]"));
 		 	                       String originalOffer = offer.getText();
-		 	                       offerValue = originalOffer.replace("-","").replace("%","% Off");
+		 	                       offerValue = originalOffer.replace("-","").replace("% OFF","% Off");
+	 	                    	  }
+	 	                    	  catch (Exception m) {
+	 	                    		 offerValue ="NA";
+								}
 		 	                       
 							}
 	 	                   
